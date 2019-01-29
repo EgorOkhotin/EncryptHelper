@@ -1,0 +1,28 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<script>
+    function hideContent() {
+        var content = document.getElementById("indx-mn");
+        content.classList.add("fadeOutDown");
+        content.classList.add("animated");
+    }
+</script>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="index-main-content" id="indx-mn">
+                <h2 class="fadeInUp animated header">
+                    Encryption Helper
+                </h2>
+                <p class="bounceInRight animated slogan">
+                    Unbreakable data protection
+                </p>
+                <p class="zoomIn animated">
+                    <a class="plate-button button-text index-btn" id="indx-btn" onclick="hideContent();" asp-action="GoToChoseAsync" >Try it now</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
