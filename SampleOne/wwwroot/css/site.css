@@ -3,7 +3,7 @@ for details on configuring this project to bundle and minify static web assets. 
 body {
     padding-top: 0;
     padding-bottom: 2%;
-    background-color: #193441;
+    background-color: #2E0927;
     height: 100%;
 }
 
@@ -16,7 +16,7 @@ html {
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
-    background-color: #193441;
+    background-color: #2E0927;
     height: 100%;
 }
 /* Carousel */
@@ -43,8 +43,8 @@ html {
     }
 }
 
-.index-main-content{
-    color:#FCFFF5;
+.index-main-content {
+    color: #FF8C00;
 }
 
 /*fonts*/
@@ -67,7 +67,7 @@ h2.header {
 .slogan {
     font-family:sloganFont;
     font-size:300%;
-    color:#B9121B;
+    color:#D90000;
     margin-bottom:3%;
     margin-top:0;
 }
@@ -75,13 +75,13 @@ h2.header {
 .regulag-text{
     font-family:'Noto Sans';
     font-size:100%;
-    color:#FCFFF5;
+    color: #FF8C00;
 }
 
 .four-header {
     font-family: 'Noto Sans';
     text-decoration-color: white;
-    color: #FCFFF5 !important;
+    color: #FF8C00 !important;
     text-decoration-style: solid;
 }
 
@@ -93,10 +93,10 @@ h2.header {
     font-family: 'Noto Sans';
     font-size: 120%;
     text-align: center;
-    color: #FCFFF5 !important;
+    color: #FF8C00 !important;
     box-sizing: border-box;
     border: solid;
-    border-color: #FCFFF5;
+    border-color: #FF8C00;
     padding-bottom: 0.5%;
     padding-top: 0.5%;
     padding-left: 1%;

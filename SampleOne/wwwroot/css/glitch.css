@@ -3,11 +3,11 @@
 body {
     margin: 0;
     font: .8em/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
-    color: #FCFFF5;
+    color: #FF8C00;
 }
 
 a {
-    color: #FCFFF5;
+    color: #FF8C00;
 }
   a:hover {
     color: limegreen; }
@@ -58,7 +58,7 @@ hr {
 
 .glitch-filter-example__filtered-text {
     filter: url(#filter);
-    fill: #FCFFF5;
+    fill: #FF8C00;
     font-family: 'Share Tech Mono', sans-serif;
     font-size: 100px;
     text-align: center;
@@ -71,7 +71,8 @@ hr {
 .bot-r,
 .top-g,
 .bot-g {
-  stroke: #ffffff; }
+    stroke: #FF8C00;
+}
 
 .top-r {
   stroke-width: 100px;
