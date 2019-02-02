@@ -10,6 +10,7 @@ namespace SampleOne.Controllers
 {
     public class HomeController : Controller
     {
+        const int DELAY = 10;
         public HomeController()
         {
         }
@@ -37,24 +38,16 @@ namespace SampleOne.Controllers
         public IActionResult Chose()
         {
             ViewData["Message"] = "Your contact page.";
-
+            var direction = TempData.Get<string>("direction");
+            ViewData.Add("direction", direction);
             return View();
         }
-
-        //[HttpGet("Settings/")]
-        //public IActionResult Settings()
-        //{
-        //    var model = new SettingsViewModel();
-        //    model.Passwords = new string[0];
-        //    model.PasswordsCount = 0;
-        //    return View();
-        //}
 
         [HttpPost]
         public async Task<RedirectToActionResult> Settings(SettingsViewModel model)
         {
 
-            await Task.Delay(900);
+            await Task.Delay(DELAY);
             if (ModelState.IsValid)
             {
                 EncryptionInfo info = new EncryptionInfo();
@@ -96,18 +89,36 @@ namespace SampleOne.Controllers
         [HttpGet]
         public async Task<RedirectToActionResult> GoToChoseAsync()
         {
-            await Task.Delay(900);
+            await Task.Delay(DELAY);
+            TempData.Put("direction", "front");
             return RedirectToAction("Chose");
         }
 
         [HttpGet]
+        public async Task<RedirectToActionResult> BackToChoseAsync()
+        {
+            await Task.Delay(DELAY);
+            TempData.Put("direction", "back");
+            return RedirectToAction("Chose");
+        }
+        [HttpGet]
         public async Task<RedirectToActionResult> GoToSettingsAsync(int? selectedTypeNumber)
         {
-            await Task.Delay(900);
+            await Task.Delay(DELAY);
             int passCount = -1;
             if (selectedTypeNumber.Value == 1 || selectedTypeNumber.Value == 2) passCount = 1;
             else if(selectedTypeNumber==3) passCount = 3;
+            ViewData.Add("direction", "front");
             return RedirectToAction("Settings", "Home", new { passwordsCount = passCount});
+        }
+
+        [HttpGet]
+        private async Task<RedirectToActionResult> BackToSettingsAsync(int? selectedTypeNumber)
+        {
+            await Task.Delay(DELAY);
+            int passCount = TempData.Get<EncryptionInfo>("EncryptionInfo").PasswordsCount;
+            ViewData.Add("direction", "back");
+            return RedirectToAction("Settings", "Home", new { passwordsCount = passCount });
         }
 
         [HttpGet]

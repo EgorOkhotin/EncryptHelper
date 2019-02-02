@@ -2,21 +2,47 @@
 @{
     ViewData["Title"] = "Encryption";
 }
-<div class="container-fluid">
+<div class="container-fluid movable-exit">
     <div class="row">
         <div class="col-md-12">
-            <h2>Encryption</h2>
+            <h2 class="two-header center-header">Encryption</h2>
+        </div>
+    </div>
+    <div class="row movable-onload">
+        <div class="col-md-4">
+            <a class="plate-button chose-button" asp-action="BackToChoseAsync" onclick="pageBack();"> Back to Settings</a>
+        </div>
+        <div class="col-md-8"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <textarea></textarea>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <label>Encryption</label>
+            <input type="checkbox" name="Encryption" />
+        </div>
+        <div class="col-md-6">
+            <label>Decryption</label>
+            <input type="checkbox" name="Decryption" />
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
-
+            <div class="row movable-onload">
+                <div class="col-md-12">
+                    <input class="plate-button setting-button" type="submit" value="Next" onclick="pageNext();" />
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12"></div>
-    </div>
-    <div class="row">
-        <div class="col-md-12"></div>
     </div>
 </div>
+<script>
+    let direction = '@(ViewData["direction"])';
+    if (direction === "back") {
+        backPageLoad();
+    }
+    else forwardPageLoad();
+</script>

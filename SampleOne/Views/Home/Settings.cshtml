@@ -3,38 +3,47 @@
     ViewData["Title"] = "Settings";
 }
 
-<div class="container-fluid">
-    <div class="row">
+<div class="container-fluid movable-exit hidden">
+    <div class="row movable-onload">
         <div class="col-md-12">
-            <h2 class="four-header">Settings</h2>
+            <h2 class="two-header center-header">Enter password(s)</h2>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-12">
-            <h3 class="regulag-text">Enter password(s)</h3>
+    <div class="row movable-onload">
+        <div class="col-md-3">
+            <a class="plate-button chose-button" asp-action="BackToChoseAsync" onclick="pageBack();"> Back to Chose</a>
         </div>
+        <div class="col-md-9"></div>
     </div>
-
-    @{
-        using (Html.BeginForm("Settings", "Home", FormMethod.Post))
-        {
-            for (int i = 0; i < Model.PasswordsCount; i++)
+    <div class="center-align blur movable-onload">
+        <div class="passwords-wrapper padding-left">
+            @using (Html.BeginForm("Settings", "Home", FormMethod.Post))
             {
-                <div class="row">
+                for (int i = 0; i < Model.PasswordsCount; i++)
+                {
+                    <div class="row movable-onload">
+                        <div class="col-md-12">
+                            <input autocomplete="off" class="text password-input" id="Passwords_@(i)_" name="Passwords[@(i)]" placeholder="Password #@(i+1)" type="text" value="">
+                        </div>
+                    </div>
+                }
+                <div class="row movable-onload">
                     <div class="col-md-12">
-                        <input class="text" id="Passwords_@(i)_" name="Passwords[@(i)]" type="text" value="">
+                        <input class="plate-button setting-button" type="submit" value="Next" onclick="pageNext();" />
                     </div>
                 </div>
             }
-            <div class="row">
-                <div class="col-md-12">
-                    <input class="plate-button chose-button" type="submit" value="Next" />
-                </div>
-            </div>
-        }
-
-    }
+        </div>
+    </div>
 </div>
+<script>
+    let direction = '@(ViewData["direction"])';
+    if (direction === "back") {
+        backPageLoad();
+    }
+    else forwardPageLoad();
+</script>
+
 
 
 

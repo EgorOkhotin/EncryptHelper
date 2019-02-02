@@ -11,6 +11,10 @@ html {
     height: 100%;
 }
 
+.hidden{
+    visibility:hidden;
+}
+
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
@@ -91,6 +95,10 @@ h2.header {
     font-size: 200%;
 }
 
+.center-header{
+    padding-left:35%;
+}
+
 
 /*buttons*/
 .plate-button {
@@ -129,23 +137,51 @@ input[type="submit" i] {
     background-color: #2E0927 !important;
 }
 
+.setting-button{
+    margin-top:5%;
+    margin-bottom:5%;
+}
+
 /*chose page*/
 .chose-box {
     margin-bottom: 1.5%;
     height: 33%;
 }
-
-/*settings page*/
-.level-info{
-    padding-left:5%;
+.level-info {
+    padding-left: 5%;
 }
 
 .center-align {
     margin-top: 5%;
 }
 
+/*settings page*/
+.password-input {
+    background: 0;
+    border: none;
+    border-bottom: 1px solid #FF8C00 !important;
+    color: #FF8C00;
+    height: 100%;
+    width:30%;
+    outline: none;
+    font-size: 100%;
+    margin-bottom: 0.5%;
+    margin-top: 2%;
+}
+
+.passwords-wrapper {
+    margin-top:0%;
+}
+
+.padding-left{
+    padding-left:5%;
+}
+
+.top-margin{
+    margin-top:3%;
+}
 /*images*/
-.protected-lock{
+.protected-lock {
     width: 65%;
     height: 65%;
     padding-top: 10%;

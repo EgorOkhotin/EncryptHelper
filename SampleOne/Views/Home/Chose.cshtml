@@ -3,17 +3,18 @@
     ViewData["Title"] = "Chose";
 }
 
-<div class="container-fluid">
-    <div class="row fadeIn animated">
+
+<div class="container-fluid movable-exit hidden">
+    <div class="row movable-onload">
         <div class="col-md-12">
-            <h2 class="two-header">Chose security level</h2>
+            <h2 class="two-header center-header">Chose security level</h2>
         </div>
     </div>
     <div class="center-align">
-        <div class="blur fadeIn animated">
+        <div class="blur movable-onload">
             <div class="row">
                 <div class="col-md-6 level-info">
-                    <div class="chose-box bounceInLeft animated">
+                    <div class="chose-box movable-onload">
                         <h4 class="four-header">
                             Protected level
                         </h4>
@@ -21,12 +22,12 @@
                             Main goal this level is protect bla-bla-bla
                         </p>
                         <p>
-                            <a class="plate-button chose-button" asp-action="GoToSettingsAsync" asp-route-selectedTypeNumber="1" onclick="pageExit();">Chose</a>
+                            <a class="plate-button chose-button" asp-action="GoToSettingsAsync" asp-route-selectedTypeNumber="1" onclick="pageNext();">Chose</a>
                         </p>
                     </div>
                 </div>
                 <div class="col-md-2 svg-container">
-                    <object type="image/svg+xml" data="~/images/lock-bw4.svg" class="protected-lock bounceInRight animated">Your browser does not support SVG</object>
+                    <object type="image/svg+xml" data="~/images/lock-bw4.svg" class="protected-lock movable-onload">Your browser does not support SVG</object>
                 </div>
                 <div class="col-md-2 svg-container">
                 </div>
@@ -34,10 +35,10 @@
                 </div>
             </div>
         </div>
-        <div class="blur fadeIn animated">
+        <div class="blur movable-onload">
             <div class="row">
                 <div class="col-md-6 level-info">
-                    <div class="chose-box bounceInLeft animated">
+                    <div class="chose-box movable-onload">
                         <h4 class="four-header">
                             Secret level
                         </h4>
@@ -45,24 +46,24 @@
                             Main goal this level is protect bla-bla-bla
                         </p>
                         <p>
-                            <a class="plate-button chose-button" asp-action="GoToSettingsAsync" asp-route-selectedTypeNumber="2" onclick="pageExit();">Chose</a>
+                            <a class="plate-button chose-button" asp-action="GoToSettingsAsync" asp-route-selectedTypeNumber="2" onclick="pageNext();">Chose</a>
                         </p>
                     </div>
                 </div>
                 <div class="col-md-2 svg-container">
-                    <object type="image/svg+xml" data="~/images/lock-bw4.svg" class="protected-lock bounceInRight animated">Your browser does not support SVG</object>
+                    <object type="image/svg+xml" data="~/images/lock-bw4.svg" class="protected-lock movable-onload">Your browser does not support SVG</object>
                 </div>
                 <div class="col-md-2 svg-container">
-                    <object type="image/svg+xml" data="~/images/lock-bw4.svg" class="protected-lock bounceInRight animated">Your browser does not support SVG</object>
+                    <object type="image/svg+xml" data="~/images/lock-bw4.svg" class="protected-lock movable-onload">Your browser does not support SVG</object>
                 </div>
                 <div class="col-md-2 svg-container">
                 </div>
             </div>
         </div>
-        <div class="blur fadeIn animated">
+        <div class="blur movable-onload">
             <div class="row">
                 <div class="col-md-6 level-info">
-                    <div class="chose-box bounceInLeft animated">
+                    <div class="chose-box movable-onload">
                         <h4 class="four-header">
                             Top Secret level
                         </h4>
@@ -70,34 +71,30 @@
                             Main goal this level is protect bla-bla-bla
                         </p>
                         <p>
-                            <a class="plate-button chose-button" asp-action="GoToSettingsAsync" asp-route-selectedTypeNumber="3" onclick="pageExit();">Chose</a>
+                            <a class="plate-button chose-button" asp-action="GoToSettingsAsync" asp-route-selectedTypeNumber="3" onclick="pageNext();">Chose</a>
                         </p>
                     </div>
                 </div>
                 <div class="col-md-2 svg-container">
-                    <object type="image/svg+xml" data="~/images/lock-bw4.svg" class="protected-lock bounceInRight animated">Your browser does not support SVG</object>
+                    <object type="image/svg+xml" data="~/images/lock-bw4.svg" class="protected-lock movable-onload">Your browser does not support SVG</object>
                 </div>
                 <div class="col-md-2 svg-container">
-                    <object type="image/svg+xml" data="~/images/lock-bw4.svg" class="protected-lock bounceInRight animated">Your browser does not support SVG</object>
+                    <object type="image/svg+xml" data="~/images/lock-bw4.svg" class="protected-lock movable-onload">Your browser does not support SVG</object>
                 </div>
                 <div class="col-md-2 svg-container">
-                    <object type="image/svg+xml" data="~/images/lock-bw4.svg" class="protected-lock bounceInRight animated">Your browser does not support SVG</object>
+                    <object type="image/svg+xml" data="~/images/lock-bw4.svg" class="protected-lock movable-onload">Your browser does not support SVG</object>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 <script>
-    function pageExit() {
-        let header = document.getElementsByClassName("two-header")[0];
-        let mainContainer = document.getElementsByClassName("center-align")[0];
-        header.classList.add("fadeOut");
-        mainContainer.classList.add("fadeOut");
-
-        header.classList.add("animated");
-        mainContainer.classList.add("animated");
-
+    let direction = '@(ViewData["direction"])';
+    if (direction === "back") {
+        backPageLoad();
     }
+    else { forwardPageLoad(); }
 </script>
+
+
 
