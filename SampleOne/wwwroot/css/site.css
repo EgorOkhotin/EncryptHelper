@@ -85,6 +85,13 @@ h2.header {
     text-decoration-style: solid;
 }
 
+.two-header {
+    font-family: 'Noto Sans';
+    color: #04756F;
+    font-size: 200%;
+}
+
+
 /*buttons*/
 .plate-button {
     text-decoration: none;
@@ -97,20 +104,17 @@ h2.header {
     box-sizing: border-box;
     border: solid;
     border-color: #FF8C00;
-    padding-bottom: 0.5%;
-    padding-top: 0.5%;
-    padding-left: 1%;
-    padding-right: 1%;
+    padding:1%;
 }
 
     .plate-button:hover {
         background-color: rgba(255,255,255,0.25) !important;
-        border-color:black;
+        border-color: black;
     }
 
 a{
-    text-decoration:none !important;
-    outline:none;
+    text-decoration: none !important;
+    outline: none;
 }
 
 .index-btn {
@@ -118,20 +122,70 @@ a{
 }
 
 .chose-button{
-    font-size:100%;
+    font-size: 100%;
+}
+
+input[type="submit" i] {
+    background-color: #2E0927 !important;
 }
 
 /*chose page*/
-.chose-box{
-    margin-bottom:1.5%;
-    height:33%;
+.chose-box {
+    margin-bottom: 1.5%;
+    height: 33%;
+}
+
+/*settings page*/
+.level-info{
+    padding-left:5%;
+}
+
+.center-align {
+    margin-top: 5%;
 }
 
 /*images*/
 .protected-lock{
-    width:65%;
-    height:65%;
+    width: 65%;
+    height: 65%;
+    padding-top: 10%;
 }
+
+.svg-container{
+    align-content:center;
+}
+
+    .svg-container object {
+        margin-top: 10%;
+        margin-left: 10%;
+    }
+
+/*blur*/
+.blur {
+    margin-top:2%;
+    background: inherit;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden; /*добавил новое правило*/
+}
+
+    .blur:before {
+        content: '';
+        width: 100%;
+        height: 100%;
+        background: inherit;
+        position: absolute;
+        box-shadow: inset 0 0 0 200px rgba(150, 60, 133, 0.3);
+        filter: blur(10px);
+    }
+
+
+
+
+
+
+
 
 
 

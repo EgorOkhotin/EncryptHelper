@@ -4,74 +4,100 @@
 }
 
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="chose-box bounceInLeft animated">
-                <h4 class="four-header">
-                    Protected level
-                </h4>
-                <p class="regulag-text">
-                    Main goal this level is protect bla-bla-bla
-                </p>
-                <p>
-                    <a class="plate-button chose-button" href="#">Chose</a>
-                </p>
-            </div>
-        </div>
-        <div class="col-md-2">
-            <object type="image/svg+xml" data="~/images/lock-bw2.svg" class="protected-lock bounceInRight animated">Your browser does not support SVG</object>
-        </div>
-        <div class="col-md-2">
-        </div>
-        <div class="col-md-2">
+    <div class="row fadeIn animated">
+        <div class="col-md-12">
+            <h2 class="two-header">Chose security level</h2>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="chose-box bounceInLeft animated">
-                <h4 class="four-header">
-                    Secret level
-                </h4>
-                <p class="regulag-text">
-                    Main goal this level is protect bla-bla-bla
-                </p>
-                <p>
-                    <a class="plate-button chose-button" href="#">Chose</a>
-                </p>
+    <div class="center-align">
+        <div class="blur fadeIn animated">
+            <div class="row">
+                <div class="col-md-6 level-info">
+                    <div class="chose-box bounceInLeft animated">
+                        <h4 class="four-header">
+                            Protected level
+                        </h4>
+                        <p class="regulag-text">
+                            Main goal this level is protect bla-bla-bla
+                        </p>
+                        <p>
+                            <a class="plate-button chose-button" asp-action="GoToSettingsAsync" asp-route-selectedTypeNumber="1" onclick="pageExit();">Chose</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-2 svg-container">
+                    <object type="image/svg+xml" data="~/images/lock-bw4.svg" class="protected-lock bounceInRight animated">Your browser does not support SVG</object>
+                </div>
+                <div class="col-md-2 svg-container">
+                </div>
+                <div class="col-md-2 svg-container">
+                </div>
             </div>
         </div>
-        <div class="col-md-2">
-            <object type="image/svg+xml" data="~/images/lock-bw2.svg" class="protected-lock bounceInRight animated">Your browser does not support SVG</object>
-        </div>
-        <div class="col-md-2">
-            <object type="image/svg+xml" data="~/images/lock-bw2.svg" class="protected-lock bounceInRight animated">Your browser does not support SVG</object>
-        </div>
-        <div class="col-md-2">
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="chose-box bounceInLeft animated">
-                <h4 class="four-header">
-                    Top Secret level
-                </h4>
-                <p class="regulag-text">
-                    Main goal this level is protect bla-bla-bla
-                </p>
-                <p>
-                    <a class="plate-button chose-button" href="#">Chose</a>
-                </p>
+        <div class="blur fadeIn animated">
+            <div class="row">
+                <div class="col-md-6 level-info">
+                    <div class="chose-box bounceInLeft animated">
+                        <h4 class="four-header">
+                            Secret level
+                        </h4>
+                        <p class="regulag-text">
+                            Main goal this level is protect bla-bla-bla
+                        </p>
+                        <p>
+                            <a class="plate-button chose-button" asp-action="GoToSettingsAsync" asp-route-selectedTypeNumber="2" onclick="pageExit();">Chose</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-2 svg-container">
+                    <object type="image/svg+xml" data="~/images/lock-bw4.svg" class="protected-lock bounceInRight animated">Your browser does not support SVG</object>
+                </div>
+                <div class="col-md-2 svg-container">
+                    <object type="image/svg+xml" data="~/images/lock-bw4.svg" class="protected-lock bounceInRight animated">Your browser does not support SVG</object>
+                </div>
+                <div class="col-md-2 svg-container">
+                </div>
             </div>
         </div>
-        <div class="col-md-2">
-            <object type="image/svg+xml" data="~/images/lock-bw2.svg" class="protected-lock bounceInRight animated">Your browser does not support SVG</object>
-        </div>
-        <div class="col-md-2">
-            <object type="image/svg+xml" data="~/images/lock-bw2.svg" class="protected-lock bounceInRight animated">Your browser does not support SVG</object>
-        </div>
-        <div class="col-md-2">
-            <object type="image/svg+xml" data="~/images/lock-bw2.svg" class="protected-lock bounceInRight animated">Your browser does not support SVG</object>
+        <div class="blur fadeIn animated">
+            <div class="row">
+                <div class="col-md-6 level-info">
+                    <div class="chose-box bounceInLeft animated">
+                        <h4 class="four-header">
+                            Top Secret level
+                        </h4>
+                        <p class="regulag-text">
+                            Main goal this level is protect bla-bla-bla
+                        </p>
+                        <p>
+                            <a class="plate-button chose-button" asp-action="GoToSettingsAsync" asp-route-selectedTypeNumber="3" onclick="pageExit();">Chose</a>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-2 svg-container">
+                    <object type="image/svg+xml" data="~/images/lock-bw4.svg" class="protected-lock bounceInRight animated">Your browser does not support SVG</object>
+                </div>
+                <div class="col-md-2 svg-container">
+                    <object type="image/svg+xml" data="~/images/lock-bw4.svg" class="protected-lock bounceInRight animated">Your browser does not support SVG</object>
+                </div>
+                <div class="col-md-2 svg-container">
+                    <object type="image/svg+xml" data="~/images/lock-bw4.svg" class="protected-lock bounceInRight animated">Your browser does not support SVG</object>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+<script>
+    function pageExit() {
+        let header = document.getElementsByClassName("two-header")[0];
+        let mainContainer = document.getElementsByClassName("center-align")[0];
+        header.classList.add("fadeOut");
+        mainContainer.classList.add("fadeOut");
+
+        header.classList.add("animated");
+        mainContainer.classList.add("animated");
+
+    }
+</script>
 

@@ -1,0 +1,40 @@
+﻿@model SettingsViewModel
+@{
+    ViewData["Title"] = "Settings";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="four-header">Settings</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="regulag-text">Enter password(s)</h3>
+        </div>
+    </div>
+
+    @{
+        using (Html.BeginForm("Settings", "Home", FormMethod.Post))
+        {
+            for (int i = 0; i < Model.PasswordsCount; i++)
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <input class="text" id="Passwords_@(i)_" name="Passwords[@(i)]" type="text" value="">
+                    </div>
+                </div>
+            }
+            <div class="row">
+                <div class="col-md-12">
+                    <input class="plate-button chose-button" type="submit" value="Next" />
+                </div>
+            </div>
+        }
+
+    }
+</div>
+
+
+

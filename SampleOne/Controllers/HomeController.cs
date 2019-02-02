@@ -10,6 +10,10 @@ namespace SampleOne.Controllers
 {
     public class HomeController : Controller
     {
+        public HomeController()
+        {
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -37,11 +41,73 @@ namespace SampleOne.Controllers
             return View();
         }
 
+        //[HttpGet("Settings/")]
+        //public IActionResult Settings()
+        //{
+        //    var model = new SettingsViewModel();
+        //    model.Passwords = new string[0];
+        //    model.PasswordsCount = 0;
+        //    return View();
+        //}
+
+        [HttpPost]
+        public async Task<RedirectToActionResult> Settings(SettingsViewModel model)
+        {
+
+            await Task.Delay(900);
+            if (ModelState.IsValid)
+            {
+                EncryptionInfo info = new EncryptionInfo();
+                info.PasswordsCount = model.PasswordsCount;
+                info.Passwords = model.Passwords;
+                TempData.Put("EncryptionInfo", info);
+                return RedirectToAction("GoToEncryption");
+            }
+            else return RedirectToAction("Error");
+        }
+
+        [HttpGet]
+        public IActionResult Settings(int? passwordsCount)
+        {
+            if (passwordsCount > 0)
+            {
+                var model = new SettingsViewModel();
+                model.PasswordsCount = passwordsCount.Value;
+                model.Passwords = new string[model.PasswordsCount];
+                var view = View(model);
+                return View(model);
+            }
+            else return Error();
+            
+        }
+
+        public IActionResult Encryption()
+        {
+            var info = TempData.Get<EncryptionInfo>("EncryptionInfo");
+            ViewData.Add("PasswordsCount", info.Passwords.Count());
+            return View();
+        }
+
+        public RedirectToActionResult GoToEncryption()
+        {
+            return RedirectToAction("Encryption");
+        }
+
         [HttpGet]
         public async Task<RedirectToActionResult> GoToChoseAsync()
         {
-            await Task.Delay(1000);
+            await Task.Delay(900);
             return RedirectToAction("Chose");
+        }
+
+        [HttpGet]
+        public async Task<RedirectToActionResult> GoToSettingsAsync(int? selectedTypeNumber)
+        {
+            await Task.Delay(900);
+            int passCount = -1;
+            if (selectedTypeNumber.Value == 1 || selectedTypeNumber.Value == 2) passCount = 1;
+            else if(selectedTypeNumber==3) passCount = 3;
+            return RedirectToAction("Settings", "Home", new { passwordsCount = passCount});
         }
 
         [HttpGet]
@@ -59,11 +125,6 @@ namespace SampleOne.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
-        private async void Delay(int ms)
-        {
-            
         }
     }
 }
