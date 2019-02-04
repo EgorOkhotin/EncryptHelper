@@ -117,7 +117,7 @@ h2.header {
 
     .plate-button:hover {
         background-color: rgba(255,255,255,0.25) !important;
-        border-color: black;
+        border-color: #2E0927;
     }
 
 a{
@@ -134,7 +134,9 @@ a{
 }
 
 input[type="submit" i] {
-    background-color: #2E0927 !important;
+    outline:none;
+    text-decoration:none;
+    background-color:rgba(0,0,0,0);
 }
 
 .setting-button{
@@ -173,12 +175,61 @@ input[type="submit" i] {
     margin-top:0%;
 }
 
+.modalWindow {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0,0,0,0.2);
+    z-index: 99999;
+    opacity: 0;
+    pointer-events: none;
+    text-align: center;
+}
+
+    .modalWindow:target {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .modalWindow > div {
+        width: 50%;
+        height: 50%;
+        position: relative;
+        margin: 10% auto;
+        background: #2E0927;
+    }
+
+.cancel-button-row{
+    margin-top: 15%;
+    margin-right:3%;
+}
+
 .padding-left{
     padding-left:5%;
 }
 
 .top-margin{
     margin-top:3%;
+}
+
+/*Encryption page*/
+.encryption-textbox {
+}
+.textbox-row {
+    margin-top:5%;
+    height:30%;
+}
+
+#textBox {
+    resize: none;
+    height: 100%;
+    width: 100%;
+    background-color: #2E0927;
+    color: #FF8C00;
+    border: 1px solid #FF8C00;
+    font-size:150%;
 }
 /*images*/
 .protected-lock {
@@ -215,6 +266,11 @@ input[type="submit" i] {
         box-shadow: inset 0 0 0 200px rgba(150, 60, 133, 0.3);
         filter: blur(10px);
     }
+
+.disabled {
+    background-color:gray !important;
+    border-color:gray !important;
+}
 
 
 

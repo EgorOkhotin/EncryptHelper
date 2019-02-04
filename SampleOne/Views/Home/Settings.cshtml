@@ -1,6 +1,7 @@
 ﻿@model SettingsViewModel
 @{
     ViewData["Title"] = "Settings";
+    
 }
 
 <div class="container-fluid movable-exit hidden">
@@ -11,7 +12,7 @@
     </div>
     <div class="row movable-onload">
         <div class="col-md-3">
-            <a class="plate-button chose-button" asp-action="BackToChoseAsync" onclick="pageBack();"> Back to Chose</a>
+            <a class="plate-button chose-button" asp-action="BackToChoseAsync" onclick="pageBack();">Back</a>
         </div>
         <div class="col-md-9"></div>
     </div>
@@ -23,25 +24,139 @@
                 {
                     <div class="row movable-onload">
                         <div class="col-md-12">
-                            <input autocomplete="off" class="text password-input" id="Passwords_@(i)_" name="Passwords[@(i)]" placeholder="Password #@(i+1)" type="text" value="">
+                            <input autocomplete="off" class="text password-input" id="Passwords_@(i)_" name="Passwords[@(i)]" placeholder="Password #@(i+1)" type="text" value="" onchange="passwordChecker();" onkeypress="passwordChecker();">
                         </div>
                     </div>
                 }
                 <div class="row movable-onload">
                     <div class="col-md-12">
-                        <input class="plate-button setting-button" type="submit" value="Next" onclick="pageNext();" />
+                        <input class="plate-button setting-button disabled" disabled="disabled" type="submit" value="Next" id="submitPasswords" onclick="pageNext();" />
+                        <a href="#openModal" class="plate-button setting-button" onclick="showModalElements();">Generate Password</a>
                     </div>
                 </div>
             }
         </div>
     </div>
 </div>
+<div id="openModal" class="modalWindow">
+    <div>
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="two-header">Password Generator</h2>
+            </div>
+        </div>
+        <div class="row top-margin">
+            <div class="col-md-12 top-margin">
+                <label class="regulag-text" id="resultPassword">Char count:</label>
+                <input type="number" id="numberBox" min="4" step="1" value="10" onchange="charCountCorrection()" />
+            </div>
+        </div>
+        <div class="row top-margin">
+            <div class="col-md-5"></div>
+            <div class="com-md-2">
+                <input type="submit" value="Generate" class="plate-button" id="generateButton" onclick="generatePassword()"/>
+            </div>
+            <div class="col-md-5"></div>
+        </div>
+        <div class="row cancel-button-row">
+            <div class="col-md-10"></div>
+            <div class="col-md-2">
+                <a href="#ok" class="plate-button">Close</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     let direction = '@(ViewData["direction"])';
     if (direction === "back") {
         backPageLoad();
     }
     else forwardPageLoad();
+
+    function generatePassword() {
+        if (isValidCharCount()) {
+            getRandomPassword(getCharCount(), passwordCallBack);
+        }
+        else alert("Char count are wrong!");
+    }
+
+    function passwordCallBack(pass) {
+        console.log("Generated password: " + pass);
+        showPassword(pass);
+    }
+
+    function isValidCharCount() {
+        let charCount = getCharCount();
+        if (charCount !== null) {
+            return charCount > 3;
+        }
+    }
+
+    function getCharCount() {
+        return document.getElementById("numberBox").value;
+    }
+
+    function showPassword(password) {
+        hideModalElements();
+        setTimeout(() => {
+            let label = document.getElementById("resultPassword");
+            label.innerText = password;
+            label.classList.remove("fadeOut");
+            label.classList.add("fadeIn", "animated");
+            label.classList.remove("hidden");
+        }, 600); 
+    }
+
+    function hideModalElements() {
+        let numberBox = document.getElementById("numberBox");
+        let generateButton = document.getElementById("generateButton");
+        let label = document.getElementById("resultPassword");
+
+        numberBox.classList.add("fadeOut", "animated");
+        generateButton.classList.add("fadeOut", "animated");
+        label.classList.add("fadeOut", "animated");
+
+        setTimeout(() => {
+            numberBox.classList.add("hidden");
+            generateButton.classList.add("hidden");
+            label.classList.add("hidden");
+        }, 500);
+    }
+
+    function showModalElements() {
+        let numberBox = document.getElementById("numberBox");
+        let generateButton = document.getElementById("generateButton");
+        let label = document.getElementById("resultPassword");
+
+        label.innerText = "Char count: ";
+        label.classList.remove("fadeIn", "animated");
+        numberBox.classList.remove("fadeOut", "animated", "hidden");
+        generateButton.classList.remove("fadeOut", "animated", "hidden");
+    }
+
+    function charCountCorrection() {
+        let numberBox = document.getElementById("numberBox");
+        if (numberBox.value < 4) numberBox.value = 4;
+    }
+
+    function passwordChecker() {
+        for (let i = 0; i < 3; i++) {
+            let elId = "Passwords_" + i + "_";
+            console.log(elId);
+            let element = document.getElementById(elId);
+            if (typeof element !== 'undefined' && element !== null) {
+
+                if (element.value.length < 4) return;
+                console.log("check")
+            }
+            else {
+                let button = document.getElementById("submitPasswords");
+                button.disabled = false;
+                button.classList.remove("disabled");
+            }
+        }
+    }
 </script>
 
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SampleOne.Models;
 
@@ -33,6 +34,12 @@ namespace SampleOne.Controllers
 
             return View();
         }
+
+        //[HttpPost]
+        //public IActionResult Encryption()
+        //{
+        //    return View();
+        //}
 
         [HttpGet]
         public IActionResult Chose()
@@ -71,7 +78,6 @@ namespace SampleOne.Controllers
                 return View(model);
             }
             else return Error();
-            
         }
 
         public IActionResult Encryption()
@@ -79,6 +85,23 @@ namespace SampleOne.Controllers
             var info = TempData.Get<EncryptionInfo>("EncryptionInfo");
             ViewData.Add("PasswordsCount", info.Passwords.Count());
             return View();
+        }
+
+        [HttpGet]
+        public string TransformText(string text, string direction)
+        {
+            if((text != null) && (direction != null))
+            {
+                if(IsValidDirection(direction))
+                {
+                    Response.StatusCode = 200;
+                    return "Tranformed";
+                    //transform text
+                    //return text
+                }
+            }
+            Response.StatusCode = 400;
+            return "Invalid request";
         }
 
         public RedirectToActionResult GoToEncryption()
@@ -137,5 +160,31 @@ namespace SampleOne.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        [HttpGet]
+        public string GetRandomPassword(int? charCount)
+        {
+            if (charCount.HasValue && charCount.Value>3)
+            {
+                string password = "samplePass";
+                //add random generation
+                Response.StatusCode = 200;
+
+                return password;
+            }
+            else
+            {
+                Response.StatusCode = 400;
+                return "Invalid count of characters";
+            }
+        }
+
+        private static bool IsValidDirection(string direction)
+        {
+            direction = direction.ToUpper();
+            return (direction == "ENCRYPT" || direction == "DECRYPT");
+        }
+
+        
     }
 }
