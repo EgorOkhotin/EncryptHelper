@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 using ElectronNET;
 using ElectronNET.API;
 
-namespace SampleOne
+namespace EncryptHelper
 {
     public class Program
     {

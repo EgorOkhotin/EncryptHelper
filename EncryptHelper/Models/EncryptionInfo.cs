@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SampleOne.Models
+namespace EncryptHelper.Models
 {
     [Serializable]
     public class EncryptionInfo

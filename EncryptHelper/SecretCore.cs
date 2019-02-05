@@ -4,7 +4,7 @@ using System;
 using System.Security;
 using System.Text;
 
-namespace SampleOne
+namespace EncryptHelper
 {
     class SecretCore : ITransformCore
     {

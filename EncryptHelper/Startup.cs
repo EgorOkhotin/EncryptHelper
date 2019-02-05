@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ElectronNET.API;
+using ElectronNET.API.Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -10,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace SampleOne
+namespace EncryptHelper
 {
     public class Startup
     {
@@ -56,8 +57,12 @@ namespace SampleOne
                     name: "default",
                     template: "{controller=Home}/{action=MainLogo}/{id?}");
             });
-
-            Task.Run(async () => await Electron.WindowManager.CreateWindowAsync());
+            BrowserWindowOptions options = new BrowserWindowOptions();
+            options.Width = 1024;
+            options.Height = 768;
+            options.MinWidth = 1024;
+            options.MinHeight = 768;
+            Task.Run(async () => await Electron.WindowManager.CreateWindowAsync(options));
         }
     }
 }

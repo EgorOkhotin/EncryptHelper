@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleOne", "SampleOne\SampleOne.csproj", "{93ABCC99-BBAC-401D-9F27-BA19A9914C29}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EncryptHelper", "EncryptHelper\EncryptHelper.csproj", "{93ABCC99-BBAC-401D-9F27-BA19A9914C29}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecurityCore", "SecurityCore\SecurityCore.csproj", "{0BFF85A3-446B-4B04-A9E4-33FF42C8947C}"
 EndProject

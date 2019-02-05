@@ -5,12 +5,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using SampleOne.Models;
+using EncryptHelper.Models;
 using SecurityCore.Api;
 using SecurityCore;
 using System.Security;
 
-namespace SampleOne.Controllers
+namespace EncryptHelper.Controllers
 {
     public class HomeController : Controller
     {

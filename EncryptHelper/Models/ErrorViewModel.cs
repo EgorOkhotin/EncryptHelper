@@ -1,6 +1,6 @@
 using System;
 
-namespace SampleOne.Models
+namespace EncryptHelper.Models
 {
     public class ErrorViewModel
     {
