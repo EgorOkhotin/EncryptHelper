@@ -15,6 +15,14 @@ html {
     visibility:hidden;
 }
 
+.master-password-input{
+    width:90% !important;
+    margin-left:2%;
+}
+
+.masterPage{
+    margin-top:15%;
+}
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {

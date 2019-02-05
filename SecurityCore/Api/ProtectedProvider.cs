@@ -17,12 +17,12 @@ namespace SecurityCore.Api
 
         public byte[] Decrypt(byte[] message)
         {
-            throw new NotImplementedException();
+            return _provider.Decrypt(message);
         }
 
         public byte[] Encrypt(byte[] message)
         {
-            throw new NotImplementedException();
+            return _provider.Encrypt(message);
         }
 
         public void SetKey(SecureString key)

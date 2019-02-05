@@ -10,6 +10,8 @@ namespace SampleOne.Models
     {
         public int PasswordsCount { get; set; }
         public string[] Passwords { get; set; }
-        //public SecurityCore EncryptProvider { get; set; }
+        public TransformType Type { get; set; }
+
+        public ITransformCore EncryptProvider { get; set; }
     }
 }
