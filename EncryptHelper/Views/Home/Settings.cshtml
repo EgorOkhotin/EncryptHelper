@@ -24,7 +24,7 @@
                 {
                     <div class="row movable-onload">
                         <div class="col-md-12">
-                            <input autocomplete="off" class="text password-input" id="Passwords_@(i)_" name="Passwords[@(i)]" placeholder="Password #@(i+1)" type="text" value="" onchange="passwordChecker();" onkeypress="passwordChecker();">
+                            <input autocomplete="off" class="text password-input" id="Passwords_@(i)_" name="Passwords[@(i)]" placeholder="Password #@(i+1)" type="text" value="" oninput="passwordChecker();">
                         </div>
                     </div>
                 }
@@ -141,17 +141,23 @@
     }
 
     function passwordChecker() {
+        let button = document.getElementById("submitPasswords");
         for (let i = 0; i < 3; i++) {
             let elId = "Passwords_" + i + "_";
             console.log(elId);
             let element = document.getElementById(elId);
             if (typeof element !== 'undefined' && element !== null) {
 
-                if (element.value.length < 4) return;
+                if (element.value.length < 4) {
+                    if (!button.disabled) {
+                        button.disabled = true;
+                        button.classList.add("disabled");
+                    }
+                    return;
+                }
                 console.log("check")
             }
             else {
-                let button = document.getElementById("submitPasswords");
                 button.disabled = false;
                 button.classList.remove("disabled");
             }

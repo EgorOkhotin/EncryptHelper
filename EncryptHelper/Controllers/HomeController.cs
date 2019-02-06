@@ -17,10 +17,13 @@ namespace EncryptHelper.Controllers
         const int DELAY = 10;
         static SecurityCoreProvider _provider;
         static ITransformCore _transformCore;
+        static EncryptionInfo _info;
+        static string _direction;
 
         static HomeController()
         {
             _provider = new SecurityCoreProvider();
+            _info = new EncryptionInfo();
             
         }
         public HomeController()
@@ -48,13 +51,13 @@ namespace EncryptHelper.Controllers
         [HttpGet]
         public IActionResult Initialization()
         {
-            TempData.Put("direction", "front");
+            ViewBag.Direction = "front";
             return View();
         }
 
         public IActionResult InitializationError(string errorMessage)
         {
-            TempData.Put("direction", "front");
+            ViewBag.Direction = "front";
             ViewBag.Error = errorMessage;
             return View("Initialization");
         }
@@ -69,8 +72,7 @@ namespace EncryptHelper.Controllers
         public IActionResult Chose()
         {
             ViewData["Message"] = "Your contact page.";
-            var direction = TempData.Get<string>("direction");
-            ViewData.Add("direction", direction);
+            ViewBag.Direction = _direction;
             return View();
         }
 
@@ -81,10 +83,8 @@ namespace EncryptHelper.Controllers
             await Task.Delay(DELAY);
             if (ModelState.IsValid)
             {
-                EncryptionInfo info = new EncryptionInfo();
-                info.PasswordsCount = model.PasswordsCount;
-                info.Passwords = model.Passwords;
-                TempData.Put("EncryptionInfo", info);
+                _info.PasswordsCount = model.PasswordsCount;
+                _info.Passwords = model.Passwords;
                 return RedirectToAction("GoToEncryption");
             }
             else return RedirectToAction("Error");
@@ -99,6 +99,7 @@ namespace EncryptHelper.Controllers
                 model.PasswordsCount = passwordsCount.Value;
                 model.Passwords = new string[model.PasswordsCount];
                 var view = View(model);
+                ViewBag.Direction = _direction;
                 return View(model);
             }
             else return Error();
@@ -106,10 +107,9 @@ namespace EncryptHelper.Controllers
 
         public IActionResult Encryption()
         {
-            var info = TempData.Get<EncryptionInfo>("EncryptionInfo");
-            info.Type = (TransformType)int.Parse(TempData.Get<string>("level"));
-            InitializeTransformCore(info);
-            _transformCore = info.EncryptProvider;
+            InitializeTransformCore(_info);
+            _transformCore = _info.EncryptProvider;
+            ViewBag.Direction = _direction;
             return View();
         }
 
@@ -155,7 +155,7 @@ namespace EncryptHelper.Controllers
         public async Task<RedirectToActionResult> GoToChoseAsync()
         {
             await Task.Delay(DELAY);
-            TempData.Put("direction", "front");
+            _direction = "front";
             return RedirectToAction("Chose");
         }
 
@@ -163,7 +163,7 @@ namespace EncryptHelper.Controllers
         public async Task<RedirectToActionResult> BackToChoseAsync()
         {
             await Task.Delay(DELAY);
-            TempData.Put("direction", "back");
+            _direction = "back";
             return RedirectToAction("Chose");
         }
         [HttpGet]
@@ -174,19 +174,19 @@ namespace EncryptHelper.Controllers
             if (selectedTypeNumber.Value == 1)
             {
                 passCount = 1;
-                TempData.Put<string>("level", ((int)TransformType.Protected).ToString());
+                _info.Type = TransformType.Protected;
             }
             else if (selectedTypeNumber.Value == 2)
             {
                 passCount = 1;
-                TempData.Put<string>("level", ((int)TransformType.Secret).ToString());
+                _info.Type = TransformType.Secret;
             }
             else if (selectedTypeNumber == 3)
             {
                 passCount = 3;
-                TempData.Put<string>("level", ((int)TransformType.TopSecret).ToString());
-            } 
-            ViewData.Add("direction", "front");
+                _info.Type = TransformType.TopSecret;
+            }
+            _direction = "front";
             return RedirectToAction("Settings", "Home", new { passwordsCount = passCount});
         }
 
@@ -195,7 +195,7 @@ namespace EncryptHelper.Controllers
         {
             await Task.Delay(DELAY);
             int passCount = TempData.Get<EncryptionInfo>("EncryptionInfo").PasswordsCount;
-            ViewData.Add("direction", "back");
+            _direction = "back";
             return RedirectToAction("Settings", "Home", new { passwordsCount = passCount });
         }
 
@@ -224,7 +224,7 @@ namespace EncryptHelper.Controllers
                 string password = "samplePass";
                 //TODO add random pass generation
                 Response.StatusCode = 200;
-
+                password = (new PasswordGenerator()).GeneratePassword(charCount.Value);
                 return password;
             }
             else
