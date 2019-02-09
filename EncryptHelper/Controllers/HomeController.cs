@@ -9,6 +9,8 @@ using EncryptHelper.Models;
 using SecurityCore.Api;
 using SecurityCore;
 using System.Security;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace EncryptHelper.Controllers
 {
@@ -62,12 +64,6 @@ namespace EncryptHelper.Controllers
             return View("Initialization");
         }
 
-        //[HttpPost]
-        //public IActionResult Encryption()
-        //{
-        //    return View();
-        //}
-
         [HttpGet]
         public IActionResult Chose()
         {
@@ -104,19 +100,26 @@ namespace EncryptHelper.Controllers
             }
             else return Error();
         }
-
+        [HttpGet]
         public IActionResult Encryption()
         {
             InitializeTransformCore(_info);
             _transformCore = _info.EncryptProvider;
             ViewBag.Direction = _direction;
-            return View();
+            return View(new Encryption());
+        }
+        [HttpPost]
+        public string CryptoChangeText(Encryption model)
+        {
+            model.Text = TransformText(model.Text, model.Direction);
+
+            return model.Text;
         }
 
-        [HttpGet]
+        [HttpPost]
         public string TransformText(string text, string direction)
         {
-            if((text != null) && (direction != null))
+            if ((text != null) && (direction != null))
             {
                 if(IsValidDirection(direction))
                 {

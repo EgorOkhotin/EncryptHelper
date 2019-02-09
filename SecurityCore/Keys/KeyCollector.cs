@@ -27,19 +27,18 @@ namespace SecurityCore.Keys
             else return _singleton;
         }
 
-        public void AddKey(string hash, byte[] primaryKey, byte[] middleKey, bool isStorageRegistrate = true)
+        public void AddKey(string hash, byte[] primaryKey, bool isStorageRegistrate = true)
         {
-            if (IsValidAddParams(hash, primaryKey, middleKey))
+            if (IsValidAddParams(hash, primaryKey))
             {
-                byte[] mk = middleKey;
-                if (IsExist(hash))
-                    mk = _keyDB.GetMiddleKey(hash);
-                else
-                    _keyDB.AddKey(hash, mk);
-
-                primaryKey.XORArrays(mk);
-                _keys.Add(hash, primaryKey);              
-                CorruptKey(mk);
+                if (isStorageRegistrate)
+                {
+                    if (IsExist(hash))
+                        throw new ArgumentException("Key already used!");
+                    else
+                        _keyDB.AddKey(hash);
+                }
+                _keys.Add(hash, primaryKey);    
             }
             else throw new ArgumentException("Incorrect argument(s)!");
         }
@@ -51,7 +50,7 @@ namespace SecurityCore.Keys
 
         public bool IsExist(string hash)
         {
-            return _keyDB.IsExist(hash) || _keys.ContainsKey(hash);
+            return  _keys.ContainsKey(hash) || _keyDB.IsExist(hash);
         }
 
         internal void DeleteKey(string name)
@@ -81,18 +80,14 @@ namespace SecurityCore.Keys
             }
         }
 
-        private bool IsValidAddParams(string hash, byte[] primaryKey, byte[] middleKey)
+        private bool IsValidAddParams(string hash, byte[] primaryKey)
         {
-            if (hash != null && primaryKey != null && middleKey != null)
-            {
-                return primaryKey.Length == middleKey.Length;
-            }
-            return false;
+            return (hash != null && primaryKey != null);
         }
 
-        public void AddKey(string hash, byte[] primaryKey, byte[] middleKey)
+        public void AddKey(string hash, byte[] primaryKey)
         {
-            this.AddKey(hash, primaryKey, middleKey, true);
+            this.AddKey(hash, primaryKey, true);
         }
     }
 }

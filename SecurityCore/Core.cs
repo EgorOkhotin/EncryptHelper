@@ -48,11 +48,14 @@ namespace SecurityCore
         internal static ITopSecretService GetTopSecretServiceProvider(params SecureString[] passwords )
         {
             if (passwords.Length < 3) throw new ArgumentException("Need more passwords");
+            var hash1 = _keyService.AddKey(passwords[0]);
+            var hash2 = _keyService.AddKey(passwords[1]);
+            var hash3 = _keyService.AddKey(passwords[2]);
             var pairs = new CryptoPair[]
             {
-                new CryptoPair(new AES(), _keyService.AddKey(passwords[0])),
-                new CryptoPair(new Twofish(), _keyService.AddKey(passwords[1])),
-                new CryptoPair(new Blowfish(), _keyService.AddKey(passwords[2]))
+                new CryptoPair(new AES(), hash1),
+                new CryptoPair(new Serpent(), hash2),
+                new CryptoPair(new Twofish(), hash3)
             };
 
             ICryptographyProvider provider = new TrippleEncryption(_keyService, pairs);

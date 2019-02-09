@@ -1,4 +1,4 @@
-﻿
+﻿@model Encryption
 @{
     ViewData["Title"] = "Encryption";
 }
@@ -32,19 +32,25 @@
     </div>
     <div class="row movable-onload top-margin">
         <div class="col-md-12">
-            <input class="plate-button" onclick="transform();" value="Transform" type="submit"/>
+            <input class="plate-button" onclick="transform();" value="Transform" type="submit" />
         </div>
     </div>
 </div>
 <script>
-    let direction = '@(ViewData["direction"])';
+    let direction = '@(ViewBag.Direction)';
     if (direction === "back") {
         backPageLoad();
     }
     else forwardPageLoad();
+    @*if ('@Model' != null) {
+        document.getElementById("textBox").value = '@(Model.Text)';
+    }*@
 
     function transform() {
         if (isValidDirection() && isNotEmptyText()) {
+            //let direction = getTransformDirection();
+            //document.getElementById('Direction').value = direction;
+            //document.getElementById('Text').value = getTextboxValue();
             transformText(getTextboxValue(), getTransformDirection());
         }
         else alert("Input parametrs are wrong!");

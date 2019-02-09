@@ -1,22 +1,21 @@
-﻿using System;
+﻿using ExternalEncryption;
+using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Security.Cryptography;
-using ExternalEncryption;
+using System.Text;
 
 namespace SecurityCore.CryptographyProvider.Algos
 {
-    class Blowfish : Algorithm, ICryptographyAlgorithm
+    class Serpent : Algorithm, ICryptographyAlgorithm
     {
-        private BlowfishProvider _blowfish;
-        public Blowfish()
+        SerpentProvider _provider;
+        public Serpent()
         {
-            _blowfish = new BlowfishProvider();
+            _provider = new SerpentProvider();
         }
-
         public byte[] Encrypt(byte[] message, byte[] key, byte[] iv)
         {
-            using (var transform = _blowfish.CreateEncryptor(key, iv))
+            using (var transform = _provider.CreateEncryptor(key, iv))
             {
                 return TransformMessage(transform, message, CryptoStreamMode.Write);
             }
@@ -24,7 +23,7 @@ namespace SecurityCore.CryptographyProvider.Algos
 
         public byte[] Decrypt(byte[] message, byte[] key, byte[] iv)
         {
-            using (var transform = _blowfish.CreateDecryptor(key, iv))
+            using (var transform = _provider.CreateDecryptor(key, iv))
             {
                 return TransformMessage(transform, message, CryptoStreamMode.Read);
             }

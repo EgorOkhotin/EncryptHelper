@@ -32,8 +32,9 @@
     </div>
 </div>
 <script>
-    let direction = '@(ViewData["direction"])';
+    let direction = '@(ViewBag.Direction)';
     if (direction === "back") {
+        
         backPageLoad();
     }
     else forwardPageLoad();

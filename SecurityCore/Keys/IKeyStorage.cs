@@ -6,8 +6,8 @@ namespace SecurityCore.Keys
 {
     internal interface IKeyStorage
     {
-        void AddKey(string hash, byte[] primaryKey, byte[] middleKey);
-        void AddKey(string hash, byte[] primaryKey, byte[] middleKey, bool isStorageRegistrate);
+        void AddKey(string hash, byte[] primaryKey);
+        void AddKey(string hash, byte[] primaryKey, bool isStorageRegistrate);
         byte[] GetKey(string hash);
         bool IsExist(string hash);
 

@@ -1,24 +1,27 @@
-﻿using System;
+﻿using ExternalEncryption.NetEncryptionLibrary;
+using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
-using ExternalEncryption.NetEncryptionLibrary;
 
 namespace ExternalEncryption
 {
-    public class TwofishProvider : EncryptProvider
+    
+    public class SerpentProvider : EncryptProvider
     {
-        TwofishManaged _provider;
-        public TwofishProvider()
+        Serpent _provider;
+        
+        public SerpentProvider()
         {
-            _provider = new TwofishManaged();
-            _provider.KeySize = 256;
-            _provider.BlockSize = 128;
+            _provider = new Serpent();
             _provider.Padding = PaddingMode.None;
+            _provider.BlockSize = 128;
+            _provider.KeySize = 128;
             BlockSize = 16;
+            KeySize = 16;
             IVSize = 16;
-            KeySize = 32;
         }
+        
         public override ICryptoTransform CreateDecryptor(byte[] rgbKey, byte[] rgbIV)
         {
             rgbKey = GetKey(rgbKey);
@@ -33,4 +36,6 @@ namespace ExternalEncryption
             return _provider.CreateEncryptor(rgbKey, rgbIV);
         }
     }
+
+
 }

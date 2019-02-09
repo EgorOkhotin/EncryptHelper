@@ -68,7 +68,7 @@
 </div>
 
 <script>
-    let direction = '@(ViewData["direction"])';
+    let direction = '@(ViewBag.Direction)';
     if (direction === "back") {
         backPageLoad();
     }
@@ -142,24 +142,30 @@
 
     function passwordChecker() {
         let button = document.getElementById("submitPasswords");
+        let isNotEmptyPassword = true;
         for (let i = 0; i < 3; i++) {
             let elId = "Passwords_" + i + "_";
-            console.log(elId);
             let element = document.getElementById(elId);
             if (typeof element !== 'undefined' && element !== null) {
 
                 if (element.value.length < 4) {
-                    if (!button.disabled) {
-                        button.disabled = true;
-                        button.classList.add("disabled");
-                    }
-                    return;
+                    isNotEmptyPassword = false;
+                    break;
                 }
-                console.log("check")
             }
             else {
-                button.disabled = false;
-                button.classList.remove("disabled");
+                break;
+            }
+        }
+
+        if (isNotEmptyPassword) {
+            button.disabled = false;
+            button.classList.remove("disabled");
+        }
+        else {
+            if (!button.disabled) {
+                button.disabled = true;
+                button.classList.add("disabled");
             }
         }
     }

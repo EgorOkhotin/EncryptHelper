@@ -36,34 +36,22 @@ namespace SecurityCore.CryptographyProvider.Algos
                 //cryptoStream.Flush();
                 //baseCryptoStream.Write(array, 0, array.Length);
                 
-                byte[] buffer = new byte[Extensions.DATABLOCK_LENGTH];
+                byte[] buffer = new byte[BUFFER_SIZE];
                 int count = 0;
                 do
                 {
                     count = cryptoStream.Read(buffer, 0, buffer.Length);
                     result.AddRange(buffer.Take(count));
                 } while (count != 0);
+
+                result = new List<byte>(result.ToArray());
             }
             else
             {
-                array = AlignMessage(array);
                 cryptoStream.Write(array, 0, array.Length);
                 result.AddRange(baseCryptoStream.ToArray());
             }
             return result.ToArray();
-        }
-
-        private byte[] AlignMessage(byte[] message)
-        {
-            if (message.Length % Extensions.DATABLOCK_LENGTH != 0)
-            {
-                var cel = message.Length / Extensions.DATABLOCK_LENGTH;
-                var count = ((cel + 1) * Extensions.DATABLOCK_LENGTH);
-                byte[] buff = new byte[count];
-                Array.Copy(message, buff, message.Length);
-                message = buff;
-            }
-            return message;
         }
     }
 }

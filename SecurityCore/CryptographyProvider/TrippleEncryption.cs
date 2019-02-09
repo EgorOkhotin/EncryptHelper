@@ -9,44 +9,51 @@ using SecurityCore.Keys;
 
 namespace SecurityCore.CryptographyProvider
 {
-    class TrippleEncryption : ICryptographyProvider
+    class TrippleEncryption : CryptographyProvider
     {
-        ICryptographyAlgorithm _aes, _blowfish, _twofish;
+        ICryptographyAlgorithm _aes, _twofish, _serpent;
         IKeyService _keyService;
 
         string _aesKeyHash;
-        string _blowfishKeyHash;
         string _twofishKeyHash;
+        string _serpentKeyHash;
 
         RNGManager _rng;
 
         public TrippleEncryption(IKeyService service, params CryptoPair[] pairs)
         {
             InitializeAes(pairs[0]);
-            InitializeTwofish(pairs[1]);
-            InitializeBlowfish(pairs[2]);
+            InitializeSerpent(pairs[1]);
+            InitializeTwofish(pairs[2]);
             _rng = new RNGManager();
+            _keyService = service;
         }
 
-        public byte[] Encrypt(byte[] message)
+        public override byte[] Encrypt(byte[] message)
         {
-            byte[] iv = new byte[Extensions.DATABLOCK_LENGTH];
+            var iv = TransformingUtil.GetEmptyIv();
             _rng.GetBytes(iv);
-            var result = _aes.Encrypt(message, GetKey(_aesKeyHash), iv);
-            result = _blowfish.Encrypt(result, GetKey(_blowfishKeyHash), iv);
-            result = _twofish.Encrypt(result, GetKey(_twofishKeyHash), iv);
+             message = TransformingUtil.AlignMessage(message);
+
+            var result = _twofish.Encrypt(message, GetKey(_twofishKeyHash), iv);
+            result = _aes.Encrypt(result, GetKey(_aesKeyHash), iv);
+            result = _serpent.Encrypt(result, GetKey(_serpentKeyHash), iv);
             result = iv.Concat(result).ToArray();
 
             return result;
         }
 
-        public byte[] Decrypt(byte[] message)
+        public override byte[] Decrypt(byte[] message)
         {
-            byte[] iv = message.Take(Extensions.DATABLOCK_LENGTH).ToArray();
-            message = message.Skip(Extensions.DATABLOCK_LENGTH).ToArray();
-            var result = _twofish.Decrypt(message, GetKey(_twofishKeyHash), iv);
-            result = _blowfish.Decrypt(result, GetKey(_blowfishKeyHash), iv);
-            result = _aes.Decrypt(message, GetKey(_aesKeyHash), iv);
+            var tuple = TransformingUtil.GetIv(message);
+            var iv = tuple.Item1;
+            message = tuple.Item2;
+
+            var result = _serpent.Decrypt(message, GetKey(_serpentKeyHash), iv);
+            result = _aes.Decrypt(result, GetKey(_aesKeyHash), iv);
+            result = _twofish.Decrypt(result, GetKey(_twofishKeyHash), iv);
+
+            result = TransformingUtil.UnAlignMessage(result);
 
             return result;
         }
@@ -62,16 +69,16 @@ namespace SecurityCore.CryptographyProvider
             _aesKeyHash = pair.Hash;
         }
 
+        private void InitializeSerpent(CryptoPair pair)
+        {
+            _serpent = pair.Algorithm;
+            _serpentKeyHash = pair.Hash;
+        }
+
         private void InitializeTwofish(CryptoPair pair)
         {
             _twofish = pair.Algorithm;
             _twofishKeyHash = pair.Hash;
-        }
-
-        private void InitializeBlowfish(CryptoPair pair)
-        {
-            _blowfish = pair.Algorithm;
-            _blowfishKeyHash = pair.Hash;
         }
     }
 }

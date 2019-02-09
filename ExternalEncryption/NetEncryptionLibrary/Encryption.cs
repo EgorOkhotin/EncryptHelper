@@ -82,48 +82,9 @@ namespace KellermanSoftware.NetEncryptionLibrary
 
     public bool WriteEncryptionPrefix { get; set; }
 
-    public Encryption(string trialExtensionCode)
-    {
-      string productCode = "CRYPT-V" + Encryption.AssemblyMajorVersion;
-      string str1 = "Kellerman Encryption Library";
-      string str2 = "www.KellermanSoftware.com";
-      string productName = str1;
-      string website = str2;
-      string empty1 = string.Empty;
-      string empty2 = string.Empty;
-      //LicensingLibrary licensingLibrary = new LicensingLibrary(productCode, productName, website, empty1, empty2);
-      //if (!licensingLibrary.ExtendTrial(trialExtensionCode))
-      //  throw new Exception(licensingLibrary.AdditionalInfo);
-      //if (!licensingLibrary.CheckLicense())
-      //  throw new Exception(licensingLibrary.AdditionalInfo);
-      this.Initialize();
-    }
-
-    public Encryption(string userName, string licenseKey)
-    {
-      this.CheckLicense(userName, licenseKey);
-      this.Initialize();
-    }
-
     public Encryption()
     {
-      this.CheckLicense(string.Empty, string.Empty);
       this.Initialize();
-    }
-
-    private bool CheckLicense(string userName, string licenseKey)
-    {
-      //string productCode = "CRYPT-V" + Encryption.AssemblyMajorVersion;
-      //string str1 = "Kellerman Encryption Library";
-      //string str2 = "www.KellermanSoftware.com";
-      //string productName = str1;
-      //string website = str2;
-      //string userName1 = userName;
-      //string license = licenseKey;
-      ////LicensingLibrary licensingLibrary = new LicensingLibrary(productCode, productName, website, userName1, license);
-      ////if (!licensingLibrary.CheckLicense())
-      ////  throw new Exception(licensingLibrary.AdditionalInfo);
-      return true;
     }
 
     private void Initialize()

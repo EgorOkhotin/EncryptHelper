@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
 
@@ -11,8 +12,8 @@ namespace SecurityCore
     {
         public static byte[] GetBytes(this SecureString val)
         {
-            string pass = val.ToString();
-            return Encoding.Unicode.GetBytes(pass);
+            string plainStr = new System.Net.NetworkCredential(string.Empty, val).Password;
+            return Encoding.Unicode.GetBytes(plainStr);
         }
 
         public static void XORArrays(this byte[] arr1, byte[] arr2)
@@ -37,7 +38,8 @@ namespace SecurityCore
             return (byte)val;
         }
 
-        internal const byte DATABLOCK_LENGTH = 32;
-        internal const byte IV_LENGTH = 16;
+        //internal const byte DATABLOCK_LENGTH = 32;
+        //internal const byte KEY_LENGTH = 32;
+        //internal const byte IV_LENGTH = 32;
     }
 }

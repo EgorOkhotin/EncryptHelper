@@ -18,7 +18,7 @@ namespace EncryptHelper
         {
             try
             {
-                CreateWebHostBuilder(args).Build().Run();
+                BuildWebHost(args).Run();
             }
             catch(Exception ex)
             {
@@ -27,9 +27,13 @@ namespace EncryptHelper
             
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
+        public static IWebHost BuildWebHost(string[] args)
+        {
+            return WebHost.CreateDefaultBuilder(args)
+                .UseElectron(args)
                 .UseStartup<Startup>()
-            .UseElectron(args);
+                .Build();
+        }
+
     }
 }

@@ -65,10 +65,9 @@ namespace ExternalEncryption.NetEncryptionLibrary
           inputBuffer[inputCount++] = byte.MaxValue;
           break;
         case TwofishBase.EncryptionDirection.Decrypting:
-          int count = 16;
-          do
-            ;
-          while (this.m_dataBlock[--count] != byte.MaxValue);
+          int count = 15;
+          while (this.m_dataBlock[count] != byte.MaxValue) count--;
+          
           byte[] numArray1 = new byte[count];
           Buffer.BlockCopy((Array) this.m_dataBlock, 0, (Array) numArray1, 0, count);
           return numArray1;

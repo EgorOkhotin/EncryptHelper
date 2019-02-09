@@ -20,7 +20,8 @@ namespace SecurityCore.CryptographyProvider
 
         string IHashProvider.Hash(byte[] data)
         {
-            return Convert.ToBase64String(Hash(data));
+            var result =  Convert.ToBase64String(Hash(data));
+            return result;
         }
     }
 }

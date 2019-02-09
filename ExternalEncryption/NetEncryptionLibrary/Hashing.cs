@@ -33,42 +33,14 @@ namespace ExternalEncryption.NetEncryptionLibrary
           return (HashAlgorithm) SHA384.Create();
         case HashProvider.SHA512:
           return (HashAlgorithm) SHA512.Create();
-        case HashProvider.MD2:
-          return (HashAlgorithm) new MD2();
-        case HashProvider.MD4:
-          return (HashAlgorithm) new MD4();
-        case HashProvider.MD5:
-          return (HashAlgorithm) MD5.Create();
-        case HashProvider.HAVAL:
-          return (HashAlgorithm) new HAVAL(HAVALParameters.GetParameters());
-        case HashProvider.Ripemd320:
-          return (HashAlgorithm) new RIPEMD320();
-        case HashProvider.GostHash:
-          return (HashAlgorithm) new GOSTHash();
-        case HashProvider.Whirlpool:
-          return (HashAlgorithm) new Whirlpool();
-        case HashProvider.Tiger:
-          return (HashAlgorithm) new Tiger();
-        case HashProvider.FCS16:
-          return (HashAlgorithm) new FCS16();
-        case HashProvider.FCS32:
-          return (HashAlgorithm) new FCS32();
         case HashProvider.HMACSHA256:
           return (HashAlgorithm) new HMACSHA256();
-        case HashProvider.HMACSHA25696:
-          return (HashAlgorithm) new HMACSHA25696();
         case HashProvider.HMACSHA384:
           return (HashAlgorithm) new HMACSHA384();
         case HashProvider.HMACSHA512:
           return (HashAlgorithm) new HMACSHA512();
-        case HashProvider.HMACSHA51296:
-          return (HashAlgorithm) new HMACSHA51296();
         case HashProvider.HMACSHA1:
           return (HashAlgorithm) new HMACSHA1();
-        case HashProvider.HMACSHA196:
-          return (HashAlgorithm) new HMACSHA196();
-        case HashProvider.HMACMD596:
-          return (HashAlgorithm) new HMACMD596();
         default:
           return (HashAlgorithm) MD5.Create();
       }

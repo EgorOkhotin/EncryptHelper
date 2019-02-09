@@ -25,26 +25,13 @@ namespace SecurityCore.Loader
 
         public bool IsExist(string hash)
         {
-            try
-            {
-                LoadKey(hash);
-                return true;
-            }
-            catch(KeyNotFoundException)
-            {
-                return false;
-            }
-            catch(NullReferenceException)
-            {
-                return false;
-            }
+            return _keyBase.GetCollection<Key>().Exists(x => (x.Name == hash));
         }
 
-        public void AddKey(string hash, byte[] key)
+        public void AddKey(string hash)
         {
-            var k = new Key(hash, key);
+            var k = new Key(hash);
             SaveKey(k);
-            //throw new NotImplementedException();
         }
 
         public byte[] GetMiddleKey(string hash)
@@ -60,7 +47,7 @@ namespace SecurityCore.Loader
         private byte[] LoadKey(string keyName)
         {
             var key = _keyBase.GetCollection<Key>().FindOne(x => (x.Name == keyName));
-            if (key.KeyBytes != null) return key.KeyBytes;
+            if (key != null) return new byte[0];
             else throw new KeyNotFoundException();
         }
 
@@ -89,11 +76,8 @@ namespace SecurityCore.Loader
         private bool DeleteKey(string keyName)
         {
             var key = _keyBase.GetCollection<Key>().FindOne(x => (x.Name == keyName));
-            if(key.KeyBytes != null)
+            if(key != null)
             {
-                var array = key.KeyBytes;
-                for (int i = 0; i < array.Length; i++) array[i] = 0;
-                _keyBase.GetCollection<Key>().Update(key);
                 _keyBase.GetCollection<Key>().Delete(x => (x.Name == keyName));
                 return true;
             }
@@ -118,10 +102,9 @@ namespace SecurityCore.Loader
 
         public class Key
         {
-            public Key(string name, byte[] key)
+            public Key(string name)
             {
                 Id = 0;
-                KeyBytes = key;
                 Name = name;
             }
 
@@ -132,7 +115,6 @@ namespace SecurityCore.Loader
 
             public int Id { get; set; }
             public string Name { get; set; }
-            public byte[] KeyBytes { get; set; }
         }
     }
 }

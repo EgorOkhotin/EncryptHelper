@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace SecurityCore.CryptographyProvider
 {
-    class SingleEncryption : ICryptographyProvider
+    class SingleEncryption : CryptographyProvider
     {
         readonly ICryptographyAlgorithm _alg;
         readonly string _keyHash;
@@ -21,22 +21,29 @@ namespace SecurityCore.CryptographyProvider
             _rng = new RNGManager();
             _alg = pair.Algorithm;
             _keyHash = pair.Hash;
+            //KeyHashes.Add(pair.Hash);
         }
 
-
-
-        public byte[] Decrypt(byte[] message)
+        public override byte[] Decrypt(byte[] message)
         {
-            byte[] iv = message.Take(Extensions.IV_LENGTH).ToArray();
-            byte[] chiperText = message.Skip(Extensions.IV_LENGTH).ToArray();
-            var result = _alg.Decrypt(chiperText, _keyService.GetKey(_keyHash), iv);
+            var tuple = TransformingUtil.GetIv(message);
+            byte[] iv = tuple.Item1;
+            message = tuple.Item2;
+
+            var result = _alg.Decrypt(message, _keyService.GetKey(_keyHash), iv);
+
+            result = TransformingUtil.UnAlignMessage(result);
+
             return result;
         }
 
-        public byte[] Encrypt(byte[] message)
+        public override byte[] Encrypt(byte[] message)
         {
-            byte[] iv = new byte[Extensions.DATABLOCK_LENGTH/2];
+            var iv = TransformingUtil.GetEmptyIv();
             _rng.GetBytes(iv);
+
+            message = TransformingUtil.AlignMessage(message);
+
             var result = _alg.Encrypt(message, _keyService.GetKey(_keyHash), iv);
             result = iv.Concat(result).ToArray();
             return result;

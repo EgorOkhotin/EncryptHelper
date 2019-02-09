@@ -5,6 +5,7 @@ using System.Text;
 using SecurityCore.CryptographyProvider;
 using SecurityCore.RNG;
 using System.Linq;
+using System.Security.Cryptography;
 
 namespace SecurityCore.Keys
 {
@@ -26,15 +27,12 @@ namespace SecurityCore.Keys
             var handleResult = HandleKey(key);
             var hash = handleResult.Item1;
             var keyBytes = handleResult.Item2;
-            var middleKey = handleResult.Item3;
 
             if (!_storage.IsExist(hash))
-                _storage.AddKey(hash, keyBytes, middleKey);
-            else throw new ArgumentException("Already used key!");
+                _storage.AddKey(hash, keyBytes);
+            else throw new ArgumentException($"Already used key! Hash: {hash}");
 
             return hash;
-            ////hash primary key and add in collector and check already exist
-            //throw new NotImplementedException();
         }
 
         public string AddNoTrackKey(SecureString password)
@@ -42,10 +40,9 @@ namespace SecurityCore.Keys
             var handleResult = HandleKey(password);
             var hash = handleResult.Item1;
             var keyBytes = handleResult.Item2;
-            var middleKey = handleResult.Item3;
 
             if (!_storage.IsExist(hash))
-                _storage.AddKey(hash, keyBytes, middleKey, false);
+                _storage.AddKey(hash, keyBytes, false);
             else throw new ArgumentException("Already used key!");
 
             return hash;
@@ -65,18 +62,15 @@ namespace SecurityCore.Keys
             //throw new NotImplementedException();
         }
 
-        private Tuple<string, byte[], byte[]> HandleKey(SecureString password)
+        private Tuple<string, byte[]> HandleKey(SecureString password)
         {
-            var keyBytes = password.GetBytes()
-                .Take(Extensions.DATABLOCK_LENGTH)
-                .ToArray();
+            var keyBytes = password.GetBytes();
+
+            keyBytes = new SHA512Managed().ComputeHash(keyBytes);
 
             string hash = _hash.Hash(keyBytes);
 
-            var middleKey = new byte[keyBytes.Length];
-            _rng.GetBytes(middleKey);
-
-            return new Tuple<string, byte[], byte[]>(hash, keyBytes, middleKey);
+            return new Tuple<string, byte[]>(hash, keyBytes);
         }
 
         

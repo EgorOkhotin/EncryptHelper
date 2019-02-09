@@ -65,7 +65,8 @@ function getRandomPassword(charCount, callback) {
 function getTransformedText(text, direction, callback) {
     let result = ""
     $.ajax({
-        url: "/Home/TransformText",
+        type: "POST",
+        url: "/Home/CryptoChangeText",
         data: { text: text, direction: direction },
         success: (data) => { callback(data); },
         dataType: "text"

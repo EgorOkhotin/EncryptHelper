@@ -13,8 +13,6 @@ namespace SecurityCore.CryptographyProvider.Algos
         public Twofish()
         {
             _twofish = new TwofishProvider();
-            //_twofish.KeySize = 256;
-            //_twofish.Mode = CipherMode.CBC;
         }
         
         public byte[] Encrypt(byte[] message, byte[] key, byte[] iv)
