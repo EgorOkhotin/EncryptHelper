@@ -10,7 +10,7 @@
     </div>
     <div class="row movable-onload">
         <div class="col-md-4">
-            <a class="plate-button setting-button" asp-action="BackToChoseAsync" onclick="pageBack();">Back</a>
+            <a class="plate-button setting-button" onclick="encryptionPage.gotoPreviousPage();">Back</a>
         </div>
         <div class="col-md-8"></div>
     </div>
@@ -22,82 +22,17 @@
     <div class="row checkbox-row movable-onload">
         <div class="col-md-2">
             <label class="regulag-text">Encryption</label>
-            <input type="checkbox" name="Encryption" id="encryptionCheckbox" onchange="changeEncryptionDirection('encryption');" />
+            <input type="checkbox" name="Encryption" id="encryptionCheckbox" onchange="encryptionPage.changeEncryptionDirection('encryption');" />
         </div>
         <div class="col-md-2">
             <label class="regulag-text">Decryption</label>
-            <input type="checkbox" name="Decryption" id="decryptionCheckbox" onchange="changeEncryptionDirection('decryption');" />
+            <input type="checkbox" name="Decryption" id="decryptionCheckbox" onchange="encryptionPage.changeEncryptionDirection('decryption');" />
         </div>
         <div class="col-md-8"></div>
     </div>
     <div class="row movable-onload top-margin">
         <div class="col-md-12">
-            <input class="plate-button" onclick="transform();" value="Transform" type="submit" />
+            <input class="plate-button" onclick="encryptionPage.transform();" value="Transform" type="submit" />
         </div>
     </div>
 </div>
-<script>
-    let direction = '@(ViewBag.Direction)';
-    if (direction === "back") {
-        backPageLoad();
-    }
-    else forwardPageLoad();
-    @*if ('@Model' != null) {
-        document.getElementById("textBox").value = '@(Model.Text)';
-    }*@
-
-    function transform() {
-        if (isValidDirection() && isNotEmptyText()) {
-            //let direction = getTransformDirection();
-            //document.getElementById('Direction').value = direction;
-            //document.getElementById('Text').value = getTextboxValue();
-            transformText(getTextboxValue(), getTransformDirection());
-        }
-        else alert("Input parametrs are wrong!");
-        
-    }
-
-    function transformText(text, direction) {
-        getTransformedText(text, direction, transformCallback);
-    }
-
-    function transformCallback(text) {
-        console.log(text);
-        let textBox = document.getElementById("textBox");
-        textBox.value = text;
-    }
-
-    function changeEncryptionDirection(direction) {
-        if (direction === 'encryption') {
-            let checkbox = document.getElementById('decryptionCheckbox');
-            checkbox.checked = false;
-        }
-        else {
-            let checkbox = document.getElementById('encryptionCheckbox');
-            checkbox.checked = false;
-        }
-    }
-
-    function isValidDirection() {
-        let checkbox = document.getElementById('decryptionCheckbox');
-        if (checkbox.checked) return true;
-        checkbox = document.getElementById('encryptionCheckbox');
-        if (checkbox.checked) return true;
-        else return false;
-    }
-
-    function isNotEmptyText() {
-        let text = getTextboxValue();
-        return (text !== '' || text !== null);
-    }
-
-    function getTextboxValue() {
-        return document.getElementById("textBox").value;
-    }
-
-    function getTransformDirection() {
-        let checkbox = document.getElementById('decryptionCheckbox');
-        if (checkbox.checked) return "decrypt";
-        else return "encrypt";
-    }
-</script>

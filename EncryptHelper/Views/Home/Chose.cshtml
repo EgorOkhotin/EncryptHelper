@@ -1,10 +1,4 @@
-﻿
-@{
-    ViewData["Title"] = "Chose";
-}
-
-
-<div class="container-fluid movable-exit hidden">
+﻿<div class="container-fluid movable-exit hidden">
     <div class="row movable-onload">
         <div class="col-md-12">
             <h2 class="two-header center-header">Chose security level</h2>
@@ -22,7 +16,7 @@
                             Main goal this level is protect bla-bla-bla
                         </p>
                         <p>
-                            <a class="plate-button chose-button" asp-action="GoToSettingsAsync" asp-route-selectedTypeNumber="1" onclick="pageNext();">Chose</a>
+                            <a class="plate-button chose-button" onclick="chosePage.choseProtected();">Chose</a>
                         </p>
                     </div>
                 </div>
@@ -46,7 +40,7 @@
                             Main goal this level is protect bla-bla-bla
                         </p>
                         <p>
-                            <a class="plate-button chose-button" asp-action="GoToSettingsAsync" asp-route-selectedTypeNumber="2" onclick="pageNext();">Chose</a>
+                            <a class="plate-button chose-button" onclick="chosePage.choseSecret();">Chose</a>
                         </p>
                     </div>
                 </div>
@@ -71,7 +65,7 @@
                             Main goal this level is protect bla-bla-bla
                         </p>
                         <p>
-                            <a class="plate-button chose-button" asp-action="GoToSettingsAsync" asp-route-selectedTypeNumber="3" onclick="pageNext();">Chose</a>
+                            <a class="plate-button chose-button" onclick="chosePage.choseTopSecret();">Chose</a>
                         </p>
                     </div>
                 </div>
@@ -88,13 +82,6 @@
         </div>
     </div>
 </div>
-<script>
-    let direction = '@(ViewBag.Direction)';
-    if (direction === "back") {
-        backPageLoad();
-    }
-    else { forwardPageLoad(); }
-</script>
 
 
 

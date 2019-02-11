@@ -1,6 +1,6 @@
 ﻿@model InitializationViewModel
 @{
-    ViewData["Title"] = "Initialization";
+    ViewData["Title"] = "EncryptHelper";
 }
 
 <div class="container-fluid movable-exit hidden">
@@ -12,32 +12,25 @@
             </div>
             <div class="col-md-3"></div>
         </div>
-        @using (Html.BeginForm("InitializeAsync", "Home", FormMethod.Get))
-        {
-            <div class="row movable-onload">
-                <div class="col-md-3"></div>
-                <div class="col-md-6">
-                    <input class="text-box single-line password-input text master-password-input" id="MasterPassword" autocomplete="off" name="MasterPassword" type="text" value="" />
-                </div>
-                <div class="col-md-3"></div>
+        <div class="row movable-onload">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <input class="text-box single-line password-input text master-password-input" id="MasterPassword" autocomplete="off" name="MasterPassword" type="text" value="" />
             </div>
-            <div class="row movable-onload top-margin">
-                <div class="col-md-5"></div>
-                <div class="col-md-2">
-                    <input class="plate-button setting-button" type="submit" value="Next" onclick="pageNext();" />
-                </div>
-                <div class="col-md-5"></div>
+            <div class="col-md-3"></div>
+        </div>
+        <div class="row movable-onload top-margin">
+            <div class="col-md-5"></div>
+            <div class="col-md-2">
+                <input class="plate-button setting-button" type="submit" value="Next" onclick="submitPassword();" />
             </div>
-        }
+            <div class="col-md-5"></div>
+        </div>
     </div>
 </div>
 <script>
     let direction = '@(ViewBag.Direction)';
-    if (direction === "back") {
-        
-        backPageLoad();
-    }
-    else forwardPageLoad();
+    loadPage(direction);
 
     if ('@(ViewBag.Error)' !== '') {
         alert('@(ViewBag.Error)');
@@ -46,6 +39,25 @@
     function getPass() {
         let element = document.getElementById("MasterPassword");
         return element.value;
+    }
+
+    function submitPassword() {
+        let pass = getPassword();
+        postRequest({ MasterPassword: pass }, "/Home/Initialization", rightPassword, wrongPassword);
+    }
+
+    function wrongPassword(data) {
+        alert("Password is wrong!");
+        console.log(data);
+    }
+
+    function rightPassword(data) {
+        pageCache.chosePage = data;
+        nextPageWithTimeOut(data, 200);
+    }
+
+    function getPassword() {
+        return document.getElementById("MasterPassword").value;
     }
 </script>
 

@@ -17,7 +17,7 @@ namespace EncryptHelper.Controllers
     public class HomeController : Controller
     {
         const int DELAY = 10;
-        static SecurityCoreProvider _provider;
+        static readonly SecurityCoreProvider _provider;
         static ITransformCore _transformCore;
         static EncryptionInfo _info;
         static string _direction;
@@ -28,6 +28,7 @@ namespace EncryptHelper.Controllers
             _info = new EncryptionInfo();
             
         }
+
         public HomeController()
         {
         }
@@ -37,142 +38,36 @@ namespace EncryptHelper.Controllers
             return View();
         }
 
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
-        [HttpGet]
+        [HttpGet("Home/EncryptHelper")]
         public IActionResult Initialization()
         {
-            ViewBag.Direction = "front";
+            ViewData["Title"] = "EncryptHelper";
             return View();
         }
 
-        public IActionResult InitializationError(string errorMessage)
+        [HttpPost]
+        public IActionResult Initialization(InitializationViewModel model)
         {
-            ViewBag.Direction = "front";
-            ViewBag.Error = errorMessage;
-            return View("Initialization");
+            if (model.MasterPassword == null || model.MasterPassword == "")
+            {
+                ViewBag.Error = "IncorrectPassword";
+                Response.StatusCode = 400;
+                
+                return PartialView();
+            }
+            _provider.Initialize(GetBasePassword(model.MasterPassword));
+            return Chose();
         }
 
         [HttpGet]
         public IActionResult Chose()
         {
-            ViewData["Message"] = "Your contact page.";
-            ViewBag.Direction = _direction;
-            return View();
+            return PartialView("Chose");
         }
 
         [HttpPost]
-        public async Task<RedirectToActionResult> Settings(SettingsViewModel model)
+        public IActionResult Chose(int? selectedTypeNumber)
         {
-
-            await Task.Delay(DELAY);
-            if (ModelState.IsValid)
-            {
-                _info.PasswordsCount = model.PasswordsCount;
-                _info.Passwords = model.Passwords;
-                return RedirectToAction("GoToEncryption");
-            }
-            else return RedirectToAction("Error");
-        }
-
-        [HttpGet]
-        public IActionResult Settings(int? passwordsCount)
-        {
-            if (passwordsCount > 0)
-            {
-                var model = new SettingsViewModel();
-                model.PasswordsCount = passwordsCount.Value;
-                model.Passwords = new string[model.PasswordsCount];
-                var view = View(model);
-                ViewBag.Direction = _direction;
-                return View(model);
-            }
-            else return Error();
-        }
-        [HttpGet]
-        public IActionResult Encryption()
-        {
-            InitializeTransformCore(_info);
-            _transformCore = _info.EncryptProvider;
-            ViewBag.Direction = _direction;
-            return View(new Encryption());
-        }
-        [HttpPost]
-        public string CryptoChangeText(Encryption model)
-        {
-            model.Text = TransformText(model.Text, model.Direction);
-
-            return model.Text;
-        }
-
-        [HttpPost]
-        public string TransformText(string text, string direction)
-        {
-            if ((text != null) && (direction != null))
-            {
-                if(IsValidDirection(direction))
-                {
-                    Response.StatusCode = 200;
-                    var provider = TakeTransformProvider();
-                    if (direction == "encrypt")
-                    {
-                        return provider.Encrypt(text);
-                    }
-                    else
-                    {
-                        return provider.Decrypt(text);
-                    }
-                }
-            }
-            Response.StatusCode = 400;
-            return "Invalid request";
-        }
-
-        public RedirectToActionResult GoToEncryption()
-        {
-            return RedirectToAction("Encryption");
-        }
-
-        public async Task<RedirectToActionResult> InitializeAsync(InitializationViewModel model)
-        {
-            if(model.MasterPassword == null || model.MasterPassword=="")
-            {
-                return RedirectToAction("InitializationError", new { errorMessage = "IncorrectPassword"});
-            }
-            _provider.Initialize(GetBasePassword(model.MasterPassword));
-            return await GoToChoseAsync();
-        }
-
-        [HttpGet]
-        public async Task<RedirectToActionResult> GoToChoseAsync()
-        {
-            await Task.Delay(DELAY);
-            _direction = "front";
-            return RedirectToAction("Chose");
-        }
-
-        [HttpGet]
-        public async Task<RedirectToActionResult> BackToChoseAsync()
-        {
-            await Task.Delay(DELAY);
-            _direction = "back";
-            return RedirectToAction("Chose");
-        }
-        [HttpGet]
-        public async Task<RedirectToActionResult> GoToSettingsAsync(int? selectedTypeNumber)
-        {
-            await Task.Delay(DELAY);
             int passCount = -1;
             if (selectedTypeNumber.Value == 1)
             {
@@ -189,17 +84,50 @@ namespace EncryptHelper.Controllers
                 passCount = 3;
                 _info.Type = TransformType.TopSecret;
             }
-            _direction = "front";
-            return RedirectToAction("Settings", "Home", new { passwordsCount = passCount});
+            else return Error("Selected type is invalid");
+            
+            return Settings(passCount);
         }
 
         [HttpGet]
-        private async Task<RedirectToActionResult> BackToSettingsAsync(int? selectedTypeNumber)
+        public IActionResult Settings(int? passwordsCount)
         {
-            await Task.Delay(DELAY);
-            int passCount = TempData.Get<EncryptionInfo>("EncryptionInfo").PasswordsCount;
-            _direction = "back";
-            return RedirectToAction("Settings", "Home", new { passwordsCount = passCount });
+            if (passwordsCount.HasValue && passwordsCount > 0)
+            {
+                var model = new SettingsViewModel();
+                model.PasswordsCount = passwordsCount.Value;
+                model.Passwords = new string[model.PasswordsCount];
+                var view = View(model);
+                return PartialView("Settings", model);
+            }
+            else return Error("Bad passwords count");
+        }
+
+        [HttpPost]
+        public IActionResult Settings(SettingsViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                _info.Passwords = model.Passwords;
+                return Encryption();
+            }
+            else return Error("Password(s) are invalid");
+        }
+
+        [HttpGet]
+        public IActionResult Encryption()
+        {
+            InitializeTransformCore(_info);
+            _transformCore = _info.EncryptProvider;
+            return PartialView("Encryption",new Encryption());
+        }
+
+        [HttpPost]
+        public string Encryption(Encryption model)
+        {
+            model.Text = TransformText(model.Text, model.Direction);
+
+            return model.Text;
         }
 
         [HttpGet]
@@ -208,17 +136,20 @@ namespace EncryptHelper.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return Error("Empty error message");
         }
 
+        private IActionResult Error(string message)
+        {
+            ViewBag.Error = message;
+            Response.StatusCode = 400;
+            return View();
+        }
+
+        //API
         [HttpGet]
         public string GetRandomPassword(int? charCount)
         {
@@ -235,6 +166,28 @@ namespace EncryptHelper.Controllers
                 Response.StatusCode = 400;
                 return "Invalid count of characters";
             }
+        }
+        //
+        private string TransformText(string text, string direction)
+        {
+            if ((text != null) && (direction != null))
+            {
+                if (IsValidDirection(direction))
+                {
+                    Response.StatusCode = 200;
+                    var provider = TakeTransformProvider();
+                    if (direction == "encrypt")
+                    {
+                        return provider.Encrypt(text);
+                    }
+                    else
+                    {
+                        return provider.Decrypt(text);
+                    }
+                }
+            }
+            Response.StatusCode = 400;
+            return "Invalid request";
         }
 
         private static bool IsValidDirection(string direction)

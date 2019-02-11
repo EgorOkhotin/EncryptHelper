@@ -1,8 +1,5 @@
 ﻿@model SettingsViewModel
-@{
-    ViewData["Title"] = "Settings";
-    
-}
+
 
 <div class="container-fluid movable-exit hidden">
     <div class="row movable-onload">
@@ -12,26 +9,25 @@
     </div>
     <div class="row movable-onload">
         <div class="col-md-3">
-            <a class="plate-button chose-button" asp-action="BackToChoseAsync" onclick="pageBack();">Back</a>
+            <a class="plate-button chose-button" onclick="settingsPage.gotoPreviousPage();">Back</a>
         </div>
         <div class="col-md-9"></div>
     </div>
     <div class="center-align blur movable-onload">
         <div class="passwords-wrapper padding-left">
-            @using (Html.BeginForm("Settings", "Home", FormMethod.Post))
-            {
+            @{
                 for (int i = 0; i < Model.PasswordsCount; i++)
                 {
                     <div class="row movable-onload">
                         <div class="col-md-12">
-                            <input autocomplete="off" class="text password-input" id="Passwords_@(i)_" name="Passwords[@(i)]" placeholder="Password #@(i+1)" type="text" value="" oninput="passwordChecker();">
+                            <input autocomplete="off" class="text password-input" id="Passwords_@(i)_" name="Passwords[@(i)]" placeholder="Password #@(i+1)" type="text" value="" oninput="settingsPage.passwordChecker(@i);">
                         </div>
                     </div>
                 }
                 <div class="row movable-onload">
                     <div class="col-md-12">
-                        <input class="plate-button setting-button disabled" disabled="disabled" type="submit" value="Next" id="submitPasswords" onclick="pageNext();" />
-                        <a href="#openModal" class="plate-button setting-button" onclick="showModalElements();">Generate Password</a>
+                        <input class="plate-button setting-button disabled" disabled="disabled" type="submit" value="Next" id="submitPasswords" onclick="settingsPage.submitEncryptionPasswords();" />
+                        <a href="#openModal" class="plate-button setting-button" onclick="settingsPage.showModalElements();">Generate Password</a>
                     </div>
                 </div>
             }
@@ -48,13 +44,13 @@
         <div class="row top-margin">
             <div class="col-md-12 top-margin">
                 <label class="regulag-text" id="resultPassword">Char count:</label>
-                <input type="number" id="numberBox" min="4" step="1" value="10" onchange="charCountCorrection()" />
+                <input type="number" id="numberBox" min="4" step="1" value="10" onchange="settingsPage.charCountCorrection()" />
             </div>
         </div>
         <div class="row top-margin">
             <div class="col-md-5"></div>
             <div class="com-md-2">
-                <input type="submit" value="Generate" class="plate-button" id="generateButton" onclick="generatePassword()"/>
+                <input type="submit" value="Generate" class="plate-button" id="generateButton" onclick="settingsPage.generatePassword()"/>
             </div>
             <div class="col-md-5"></div>
         </div>
@@ -66,110 +62,7 @@
         </div>
     </div>
 </div>
-
-<script>
-    let direction = '@(ViewBag.Direction)';
-    if (direction === "back") {
-        backPageLoad();
-    }
-    else forwardPageLoad();
-
-    function generatePassword() {
-        if (isValidCharCount()) {
-            getRandomPassword(getCharCount(), passwordCallBack);
-        }
-        else alert("Char count are wrong!");
-    }
-
-    function passwordCallBack(pass) {
-        console.log("Generated password: " + pass);
-        showPassword(pass);
-    }
-
-    function isValidCharCount() {
-        let charCount = getCharCount();
-        if (charCount !== null) {
-            return charCount > 3;
-        }
-    }
-
-    function getCharCount() {
-        return document.getElementById("numberBox").value;
-    }
-
-    function showPassword(password) {
-        hideModalElements();
-        setTimeout(() => {
-            let label = document.getElementById("resultPassword");
-            label.innerText = password;
-            label.classList.remove("fadeOut");
-            label.classList.add("fadeIn", "animated");
-            label.classList.remove("hidden");
-        }, 600); 
-    }
-
-    function hideModalElements() {
-        let numberBox = document.getElementById("numberBox");
-        let generateButton = document.getElementById("generateButton");
-        let label = document.getElementById("resultPassword");
-
-        numberBox.classList.add("fadeOut", "animated");
-        generateButton.classList.add("fadeOut", "animated");
-        label.classList.add("fadeOut", "animated");
-
-        setTimeout(() => {
-            numberBox.classList.add("hidden");
-            generateButton.classList.add("hidden");
-            label.classList.add("hidden");
-        }, 500);
-    }
-
-    function showModalElements() {
-        let numberBox = document.getElementById("numberBox");
-        let generateButton = document.getElementById("generateButton");
-        let label = document.getElementById("resultPassword");
-
-        label.innerText = "Char count: ";
-        label.classList.remove("fadeIn", "animated");
-        numberBox.classList.remove("fadeOut", "animated", "hidden");
-        generateButton.classList.remove("fadeOut", "animated", "hidden");
-    }
-
-    function charCountCorrection() {
-        let numberBox = document.getElementById("numberBox");
-        if (numberBox.value < 4) numberBox.value = 4;
-    }
-
-    function passwordChecker() {
-        let button = document.getElementById("submitPasswords");
-        let isNotEmptyPassword = true;
-        for (let i = 0; i < 3; i++) {
-            let elId = "Passwords_" + i + "_";
-            let element = document.getElementById(elId);
-            if (typeof element !== 'undefined' && element !== null) {
-
-                if (element.value.length < 4) {
-                    isNotEmptyPassword = false;
-                    break;
-                }
-            }
-            else {
-                break;
-            }
-        }
-
-        if (isNotEmptyPassword) {
-            button.disabled = false;
-            button.classList.remove("disabled");
-        }
-        else {
-            if (!button.disabled) {
-                button.disabled = true;
-                button.classList.add("disabled");
-            }
-        }
-    }
-</script>
+@Html.HiddenFor(model => model.PasswordsCount)
 
 
 
