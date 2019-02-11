@@ -20,8 +20,12 @@ html {
     margin-left:2%;
 }
 
-.masterPage{
-    margin-top:15%;
+#initializationLabel{
+    margin-right:7%;
+}
+
+.masterPage {
+    margin-top: 15%;
 }
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
@@ -150,6 +154,11 @@ input[type="submit" i] {
 .setting-button{
     margin-top:5%;
     margin-bottom:5%;
+    outline:none;
+}
+
+.setting-buttons{
+    margin-top:5%;
 }
 
 /*chose page*/
@@ -221,7 +230,12 @@ input[type="submit" i] {
 .top-margin{
     margin-top:3%;
 }
-
+#resultPassword{
+    word-break:break-all;
+    width:90%;
+    padding-left:5%;
+    padding-right:5%;
+}
 /*Encryption page*/
 .encryption-textbox {
 }

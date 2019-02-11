@@ -87,10 +87,13 @@ function loadPage(direction) {
 }
 
 function nextPage(data) {
-    nextPageAnimate();
-    let container = document.getElementById("mainContainer");
-    container.innerHTML = data;
-    forwardPageLoad(); 
+    nextPageWithTimeOut(data, 300);
+    //nextPageAnimate();
+    //let container = document.getElementById("mainContainer");
+    //setTimeout(() => {
+    //    container.innerHTML = data;
+    //    forwardPageLoad();
+    //}, 300);
 }
 
 function nextPageWithTimeOut(data, timeOut) {
@@ -110,7 +113,6 @@ function previousPage(data) {
         container.innerHTML = data;
         backPageLoad();
     }, 200);
-    
 }
 
 const pageCache = { chosePage: "", settingsPage: "", encryptionPage: "" };
@@ -139,7 +141,6 @@ const chosePage = (function () {
     }
 
     function nextPageRequest(data) {
-        nextPageAnimate();
         postRequest(data, "/Home/Chose", nextPageCallback, errorCallback);
     }
 
