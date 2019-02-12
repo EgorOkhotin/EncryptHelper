@@ -8,5 +8,8 @@ namespace SecurityCore.CryptographyProvider.Algos
     {
         byte[] Encrypt(byte[] message, byte[] key, byte[] iv);
         byte[] Decrypt(byte[] message, byte[] key, byte[] iv);
+
+        int KeyByteSize {get;}
+        int BlockByteSize{get;}
     }
 }

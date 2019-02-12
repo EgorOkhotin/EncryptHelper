@@ -30,5 +30,8 @@ namespace SecurityCore.CryptographyProvider.Algos
                 return TransformMessage(decryptor, message, CryptoStreamMode.Read);
             }
         }
+
+        public int KeyByteSize => _twofish.KeySize;
+        public int BlockByteSize => _twofish.BlockSize;
     }
 }

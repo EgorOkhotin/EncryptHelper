@@ -9,10 +9,11 @@ namespace SecurityCore.Api
     class ProtectedProvider : IProtectedService
     {
         readonly ICryptographyProvider _provider;
-
-        public ProtectedProvider(ICryptographyProvider provider)
+        readonly IKeyAdder _keyAdder;
+        public ProtectedProvider(ICryptographyProvider provider, IKeyAdder keyAdder)
         {
             _provider = provider;
+            _keyAdder = keyAdder;
         }
 
         public byte[] Decrypt(byte[] message)
@@ -27,7 +28,8 @@ namespace SecurityCore.Api
 
         public void SetKey(SecureString key)
         {
-            throw new NotImplementedException();
+            var hash = _keyAdder.AddNoTrackKey(key);
+            _provider.SetKeys(new CryptoPair(null, hash));
         }
     }
 }

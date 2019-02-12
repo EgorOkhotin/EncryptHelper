@@ -70,6 +70,8 @@ namespace SecurityCore.Keys
                 CorruptKey(k.Value);
             }
             _keys = null;
+
+            _keyDB.DeleteKeyBase();
         }
 
         private void CorruptKey(byte[] key)

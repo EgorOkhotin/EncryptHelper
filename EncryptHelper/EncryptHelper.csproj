@@ -3,6 +3,7 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <AssemblyName>EncryptHelper</AssemblyName>
     <RootNamespace>EncryptHelper</RootNamespace>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="storage\**" />

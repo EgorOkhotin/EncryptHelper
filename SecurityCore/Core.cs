@@ -10,7 +10,7 @@ using SecurityCore.CryptographyProvider.Algos;
 
 namespace SecurityCore
 {
-    static class Core
+    internal class Core : IServiceFactory, IKeyAdder
     {
         static IDataCleaner _dataManager;
         static IKeyBase _db;
@@ -22,35 +22,35 @@ namespace SecurityCore
             _isInit = false;
         }
 
-        internal static ISecretService GetSecretServiceProvider(SecureString password)
+        public ISecretService GetSecretServiceProvider(SecureString password)
         {
-            var hash = _keyService.AddKey(password);
+            var hash = AddKey(password);
             CryptoPair p = new CryptoPair(new AES(), hash);
             ICryptographyProvider provdier = new SingleEncryption(p, _keyService);
-            ISecretService service = new SecretProvider(provdier);
+            ISecretService service = new SecretProvider(provdier, this);
             return service;
         }
 
-        internal static IDiplomaticService GetDiplomaticServiceProvider()
+        public IDiplomaticService GetDiplomaticServiceProvider()
         {
             throw new NotImplementedException();
         }
 
-        internal static IProtectedService GetProtectedServiceProvider(SecureString pass)
+        public IProtectedService GetProtectedServiceProvider(SecureString pass)
         {
-            var hash = _keyService.AddNoTrackKey(pass);
+            var hash = AddNoTrackKey(pass);
             CryptoPair p = new CryptoPair(new AES(), hash);
             ICryptographyProvider provider = new SingleEncryption(p, _keyService);
-            IProtectedService service = new ProtectedProvider(provider);
+            IProtectedService service = new ProtectedProvider(provider, this);
             return service;
         }
 
-        internal static ITopSecretService GetTopSecretServiceProvider(params SecureString[] passwords )
+        public ITopSecretService GetTopSecretServiceProvider(params SecureString[] passwords)
         {
             if (passwords.Length < 3) throw new ArgumentException("Need more passwords");
-            var hash1 = _keyService.AddKey(passwords[0]);
-            var hash2 = _keyService.AddKey(passwords[1]);
-            var hash3 = _keyService.AddKey(passwords[2]);
+            var hash1 = AddKey(passwords[0]);
+            var hash2 = AddKey(passwords[1]);
+            var hash3 = AddKey(passwords[2]);
             var pairs = new CryptoPair[]
             {
                 new CryptoPair(new AES(), hash1),
@@ -59,7 +59,7 @@ namespace SecurityCore
             };
 
             ICryptographyProvider provider = new TrippleEncryption(_keyService, pairs);
-            ITopSecretService service = new TopSecretProvider(provider);
+            ITopSecretService service = new TopSecretProvider(provider, this);
             return service;
         }
 
@@ -77,6 +77,28 @@ namespace SecurityCore
                 KeyCollector collector = KeyCollector.GetInstance(db);
                 _dataManager = DataManager.GetInstance(collector);
                 _keyService = new KeyServiceProvider(collector, new HashProvider());
+            }
+        }
+
+        public string AddKey(SecureString key)
+        {
+            return _keyService.AddKey(key);
+        }
+
+        public string AddNoTrackKey(SecureString key)
+        {
+            return _keyService.AddNoTrackKey(key);
+        }
+
+        private string AddKey(SecureString key, bool isTrackKey)
+        {
+            if(isTrackKey)
+            {
+                return _keyService.AddKey(key);
+            }
+            else
+            {
+                return _keyService.AddNoTrackKey(key);
             }
         }
     }

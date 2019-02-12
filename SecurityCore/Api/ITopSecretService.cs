@@ -7,9 +7,7 @@ namespace SecurityCore.Api
 {
     public interface ITopSecretService
     {
-        void SetKey1(SecureString key);
-        void SetKey2(SecureString key);
-        void SetKey3(SecureString key3);
+        void SetKeys(SecureString[] keys);
 
         byte[] Encrypt(byte[] message);
         byte[] Decrypt(byte[] message);

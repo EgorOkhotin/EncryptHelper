@@ -8,5 +8,6 @@ namespace SecurityCore.CryptographyProvider
     {
         byte[] Encrypt(byte[] message);
         byte[] Decrypt(byte[] message);
+        void SetKeys(params CryptoPair[] pairs);
     }
 }

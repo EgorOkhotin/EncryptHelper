@@ -28,5 +28,8 @@ namespace SecurityCore.CryptographyProvider.Algos
                 return TransformMessage(transform, message, CryptoStreamMode.Read);
             }
         }
+
+        public int KeyByteSize => _provider.KeySize;
+        public int BlockByteSize => _provider.BlockSize;
     }
 }

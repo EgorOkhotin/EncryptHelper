@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SecurityCore.CryptographyProvider
 {
-    class VernammEncryption : ICryptographyProvider
+    class VernammEncryption : CryptographyProvider
     {
         readonly ICryptographyAlgorithm _vernamm;
         string _keyHash;
@@ -15,18 +15,18 @@ namespace SecurityCore.CryptographyProvider
             _vernamm = alg;
         }
 
-        public void SetKey(string keyHash)
+        public override void SetKeys(params CryptoPair[] pairs)
         {
-            _keyHash = keyHash;
+            _keyHash = pairs[0].Hash;
         }
 
-        public byte[] Decrypt(byte[] message)
+        public override byte[] Decrypt(byte[] message)
         {
             var result = _vernamm.Decrypt(message, GetKey(_keyHash), null);
             return result;
         }
 
-        public byte[] Encrypt(byte[] message)
+        public override byte[] Encrypt(byte[] message)
         {
             var result = _vernamm.Encrypt(message, GetKey(_keyHash), null);
             return result;

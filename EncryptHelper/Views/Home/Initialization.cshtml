@@ -29,12 +29,8 @@
     </div>
 </div>
 <script>
-    let direction = '@(ViewBag.Direction)';
+    let direction = 'forward';
     loadPage(direction);
-
-    if ('@(ViewBag.Error)' !== '') {
-        alert('@(ViewBag.Error)');
-    }
 
     function getPass() {
         let element = document.getElementById("MasterPassword");

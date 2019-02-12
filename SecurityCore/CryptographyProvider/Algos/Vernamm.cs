@@ -27,5 +27,8 @@ namespace SecurityCore.CryptographyProvider.Algos
 
             return messageArray;
         }
+
+        public int KeyByteSize => throw new NotImplementedException();
+        public int BlockByteSize => throw new NotImplementedException();
     }
 }
