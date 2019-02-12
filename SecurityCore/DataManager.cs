@@ -21,7 +21,7 @@ namespace SecurityCore
             if (_singleton == null)
             {
                 var manager = new DataManager(keyCollector);
-                return Interlocked.CompareExchange<DataManager>(ref _singleton, manager, _singleton);
+                return Interlocked.CompareExchange<DataManager>(ref manager, _singleton, _singleton);
             }
             else return _singleton;
         }

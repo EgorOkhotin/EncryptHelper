@@ -7,8 +7,6 @@ using System.Text;
 
 namespace ExternalEncryption.NetEncryptionLibrary
 {
-
-
     /// <summary>
     /// Performs a cryptographic transformation of data using the Twofish algorithm.
     /// This class cannot be inherited.

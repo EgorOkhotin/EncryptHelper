@@ -20,7 +20,6 @@ namespace EncryptHelper.Controllers
         static readonly SecurityCoreProvider _provider;
         static ITransformCore _transformCore;
         static EncryptionInfo _info;
-        static string _direction;
 
         static HomeController()
         {
@@ -125,9 +124,14 @@ namespace EncryptHelper.Controllers
         [HttpPost]
         public string Encryption(Encryption model)
         {
-            model.Text = TransformText(model.Text, model.Direction);
-
+            model.Text = TransformText(model.Text, model.Direction);            
             return model.Text;
+        }
+
+        [HttpPost]
+        public void EmergencyDeleteData()
+        {
+            _provider.EmergencyDelete();
         }
 
         [HttpGet]

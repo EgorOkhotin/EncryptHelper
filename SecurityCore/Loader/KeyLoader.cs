@@ -11,7 +11,7 @@ namespace SecurityCore.Loader
     class KeyLoader : FileLoader, IDisposable, IKeyBase
     {
         LiteDatabase _keyBase;
-        const string KEYS_DIR = "storage/keys/";
+        const string KEYS_DIR = "keys/";
         const string KEYS_FILE_NAME = "keys.db";
 
         public KeyLoader(SecureString password)
@@ -41,6 +41,7 @@ namespace SecurityCore.Loader
 
         public void DeleteKeyBase()
         {
+            _keyBase.Dispose();
             base.DeleteFile(KEYS_DIR + KEYS_FILE_NAME);
         }
 

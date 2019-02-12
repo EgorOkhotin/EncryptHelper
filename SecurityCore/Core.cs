@@ -65,6 +65,7 @@ namespace SecurityCore
 
         internal static void DropAllData()
         {
+            _isInit = false;
             _dataManager.ImmediatelyDataDelete();
         }
 

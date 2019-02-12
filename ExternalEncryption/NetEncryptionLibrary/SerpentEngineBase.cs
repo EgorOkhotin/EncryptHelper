@@ -98,30 +98,6 @@ namespace ExternalEncryption.NetEncryptionLibrary
         }
 
         /*
-         * The sboxes below are based on the work of Brian Gladman and
-         * Sam Simpson, whose original notice appears below.
-         * <p>
-         * For further details see:
-         *      http://fp.gladman.plus.com/cryptography_technology/serpent/
-         * </p>
-         */
-
-        /* Partially optimised Serpent S Box boolean functions derived  */
-        /* using a recursive descent analyser but without a full search */
-        /* of all subtrees. This set of S boxes is the result of work    */
-        /* by Sam Simpson and Brian Gladman using the spare time on a    */
-        /* cluster of high capacity servers to search for S boxes with    */
-        /* this customised search engine. There are now an average of    */
-        /* 15.375 terms    per S box.                                        */
-        /*                                                              */
-        /* Copyright:   Dr B. R Gladman (gladman@seven77.demon.co.uk)   */
-        /*                and Sam Simpson (s.simpson@mia.co.uk)            */
-        /*              17th December 1998                                */
-        /*                                                              */
-        /* We hereby give permission for information in this file to be */
-        /* used freely subject only to acknowledgement of its origin.    */
-
-        /*
          * S0 - { 3, 8,15, 1,10, 6, 5,11,14,13, 4, 2, 7, 0, 9,12 } - 15 terms.
          */
         protected void Sb0(int a, int b, int c, int d)

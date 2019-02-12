@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Security;
-using System.Text;
+﻿using System.Security;
 using SecurityCore.Api;
 
 namespace SecurityCore

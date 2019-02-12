@@ -88,12 +88,6 @@ function loadPage(direction) {
 
 function nextPage(data) {
     nextPageWithTimeOut(data, 300);
-    //nextPageAnimate();
-    //let container = document.getElementById("mainContainer");
-    //setTimeout(() => {
-    //    container.innerHTML = data;
-    //    forwardPageLoad();
-    //}, 300);
 }
 
 function nextPageWithTimeOut(data, timeOut) {
@@ -113,6 +107,10 @@ function previousPage(data) {
         container.innerHTML = data;
         backPageLoad();
     }, 200);
+}
+
+function deleteData() {
+    postRequest("", "/Home/EmergencyDeleteData", () => { }, () => { });
 }
 
 const pageCache = { chosePage: "", settingsPage: "", encryptionPage: "" };
@@ -311,7 +309,7 @@ const encryptionPage = (function () {
     }
 
     function transformCallback(text) {
-        console.log(text);
+        //console.log(text);
         let textBox = document.getElementById("textBox");
         textBox.value = text;
     }

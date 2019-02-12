@@ -44,7 +44,8 @@ namespace SecurityCore.Loader
         {
             try
             {
-                using (var file = File.Open(GetPath(fileName), FileMode.Open))
+                var filePath = GetPath(fileName);
+                using (var file = File.Open(filePath, FileMode.Open))
                 {
                     RNGManager rng = new RNGManager();
                     long count = file.Length;
@@ -52,6 +53,7 @@ namespace SecurityCore.Loader
                     for (long i = 0; i < count; i++)
                         file.WriteByte(rng.GetByte());
                 }
+                File.Delete(filePath);
                 return true;
             }
             catch (FileNotFoundException ex)

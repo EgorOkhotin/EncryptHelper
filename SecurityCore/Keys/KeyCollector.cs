@@ -69,7 +69,7 @@ namespace SecurityCore.Keys
             {
                 CorruptKey(k.Value);
             }
-            _keys = null;
+            _keys = new Dictionary<string, byte[]>();
 
             _keyDB.DeleteKeyBase();
         }
