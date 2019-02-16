@@ -3,12 +3,19 @@
   "name": "asp.net",
   "private": true,
   "devDependencies": {
+    "browser-sync": "^2.26.3",
     "gulp": "^4.0.0",
+    "gulp-clean": "^0.4.0",
     "gulp-concat": "2.6.1",
     "gulp-cssmin": "0.2.0",
-    "gulp-less": "^4.0.1",
     "gulp-sass": "4.0.2",
-    "gulp-uglify": "3.0.0",
+    "gulp-ts": "^0.3.0",
+    "gulp-uglify": "^3.0.0",
+    "gulp-uglify-es": "^1.0.4",
     "rimraf": "^2.6.3"
+  },
+  "dependencies": {
+    "gulp-typescript": "^5.0.0",
+    "typescript": "^3.3.3"
   }
 }

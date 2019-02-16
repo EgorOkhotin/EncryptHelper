@@ -8,7 +8,14 @@
 *.sln.docstates
 
 *storage/
-
+*/wwwroot/css/
+*/wwwroot/js/
+*/wwwroot/fonts/
+#*wwwroot/images/*
+*/wwwroot/lib/
+*/wwwroot/favicon.ico
+*/Content/*/lib
+*/Content/*/tmp
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
@@ -261,3 +268,4 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+EncryptHelper/wwwroot/js/site.js

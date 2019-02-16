@@ -12,7 +12,16 @@
     <None Remove="storage\**" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Sass\glitch.scss" />
+    <Content Include="CSS\animate.css" />
+    <Content Include="CSS\src\bootstrap-grid.scss" />
+    <Content Include="CSS\fonts\PlayPretend.otf" />
+    <Content Include="CSS\fonts\Square.ttf" />
+    <Content Include="CSS\fonts\Squareo.ttf" />
+    <Content Include="CSS\glitch.css" />
+    <Content Include="CSS\site.css" />
+    <Content Include="CSS\site.min.css" />
+    <Content Include="Scripts\site.js" />
+    <Content Include="Scripts\site.min.js" />
   </ItemGroup>
   <ItemGroup>
      <DotNetCliToolReference Include="ElectronNET.CLI" Version="0.0.9" />
@@ -33,5 +42,13 @@
     <Content Update="electron.manifest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="CSS\lib\" />
+    <Folder Include="Scripts\lib\" />
+    <Folder Include="wwwroot\css\" />
+    <Folder Include="wwwroot\fonts\" />
+    <Folder Include="wwwroot\js\" />
+    <Folder Include="wwwroot\lib\" />
   </ItemGroup>
 </Project>

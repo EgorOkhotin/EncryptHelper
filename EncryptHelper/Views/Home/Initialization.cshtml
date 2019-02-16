@@ -22,19 +22,17 @@
         <div class="row movable-onload top-margin">
             <div class="col-md-5"></div>
             <div class="col-md-2">
-                <input class="plate-button setting-button" type="submit" value="Next" onclick="submitPassword();" />
+                <input class="plate-button setting-button" type="submit" value="Next" onclick="submitPassword();" onsubmit="submitPassword();" />
             </div>
             <div class="col-md-5"></div>
         </div>
     </div>
 </div>
 <script>
-    let direction = 'forward';
-    loadPage(direction);
+    loadPage('forward');
 
     function getPass() {
-        let element = document.getElementById("MasterPassword");
-        return element.value;
+        return document.getElementById("MasterPassword").value;
     }
 
     function submitPassword() {

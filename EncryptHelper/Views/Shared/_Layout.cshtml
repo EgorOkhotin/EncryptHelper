@@ -3,22 +3,18 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" media="all" href="~/css/bootstrap-grid.css">
     <title>@ViewData["Title"] - SampleOne</title>
-
-    <link rel="stylesheet" media="all" href="~/css/animate.css">
-    <link rel="stylesheet" href="~/css/site.css" />
+    <environment include="Development">
+        <link rel="stylesheet" href="~/css/site.css" />
+        <script src="~/js/site.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="~/css/site.min.css" />
+        <script src="~/js/site.min.js"></script>
+    </environment>
+    
 </head>
 <body>
-    <script src="~/lib/jquery/dist/jquery.js"></script>
-    <script src="~/js/site.js"></script>
-    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
-            asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-            asp-fallback-test="window.jQuery"
-            crossorigin="anonymous"
-            integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
-    </script>
-
     @RenderSection("Scripts", required: false)
     <div class="container body-content" id="mainContainer">
         @RenderBody()
