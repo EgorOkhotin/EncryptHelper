@@ -3,36 +3,36 @@
     ViewData["Title"] = "Encryption";
 }
 <div class="container-fluid movable-exit">
-    <div class="row">
-        <div class="col-md-12">
+    <div class="row movable-onload">
+        <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12 col-12 text-center">
             <h2 class="two-header center-header">Encryption</h2>
         </div>
     </div>
     <div class="row movable-onload">
-        <div class="col-md-4">
-            <a class="plate-button setting-button" onclick="encryptionPage.gotoPreviousPage();">Back</a>
+        <div class="col-md-6 col-sm-6 col-lg-6 col-xl-6 col-6 text-left">
+            <a class="small-btn" onclick="settingsPage.gotoPreviousPage();">Back</a>
         </div>
-        <div class="col-md-5"></div>
-        <div class="col-md-3" style="padding-left:9.9%;"><a class="plate-button setting-button" onclick="deleteData();">Delete Data</a></div>
+        <div class="col-md-6 col-sm-6 col-lg-6 col-xl-6 col-6 text-right">
+            <a class="small-btn" onclick="deleteData();">Delete Data</a>
+        </div>
     </div>
     <div class="row top-margin movable-onload">
-        <div class="col-md-12">
+        <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12 col-12">
             <textarea class="encryption-textbox" id="textBox" rows="10"></textarea>
         </div>
     </div>
-    <div class="row checkbox-row movable-onload">
-        <div class="col-md-2">
+    <div class="row movable-onload top-margin">
+        <div class="col-md-3 col-sm-3 col-lg-3 col-xl-3 col-12">
             <label class="regulag-text">Encryption</label>
             <input type="checkbox" name="Encryption" id="encryptionCheckbox" onchange="encryptionPage.changeEncryptionDirection('encryption');" />
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3 col-sm-3 col-lg-3 col-xl-3 col-12">
             <label class="regulag-text">Decryption</label>
             <input type="checkbox" name="Decryption" id="decryptionCheckbox" onchange="encryptionPage.changeEncryptionDirection('decryption');" />
         </div>
-        <div class="col-md-8"></div>
     </div>
     <div class="row movable-onload top-margin">
-        <div class="col-md-12">
+        <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12 col-12">
             <input class="plate-button" onclick="encryptionPage.transform();" value="Transform" type="submit" onsubmit="encryptionPage.transform();" />
         </div>
     </div>

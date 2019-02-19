@@ -12,8 +12,9 @@ namespace SecurityCore
     {
         public static byte[] GetBytes(this SecureString val)
         {
-            string plainStr = new System.Net.NetworkCredential(string.Empty, val).Password;
-            return Encoding.Unicode.GetBytes(plainStr);
+            var pointer = Marshal.SecureStringToBSTR(val);
+            var result = Marshal.PtrToStringBSTR(pointer);
+            return Encoding.Unicode.GetBytes(result);
         }
 
         public static void XORArrays(this byte[] arr1, byte[] arr2)
@@ -37,9 +38,5 @@ namespace SecurityCore
             val = val >> count;
             return (byte)val;
         }
-
-        //internal const byte DATABLOCK_LENGTH = 32;
-        //internal const byte KEY_LENGTH = 32;
-        //internal const byte IV_LENGTH = 32;
     }
 }

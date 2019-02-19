@@ -2,62 +2,58 @@
 
 
 <div class="container-fluid movable-exit hidden">
-    <div class="row movable-onload">
+    <div class="row movable-onload center-content">
         <div class="col-md-12">
-            <h2 class="two-header center-header">Enter password(s)</h2>
+            <h2 class="two-header">Enter password(s)</h2>
         </div>
     </div>
-    <div class="row movable-onload">
-        <div class="col-md-3">
-            <a class="plate-button chose-button" onclick="settingsPage.gotoPreviousPage();">Back</a>
+    <div>
+        <div class="row movable-onload">
+            <div class="col-md-6 col-sm-6 col-lg-6 col-xl-6 col-6 text-left">
+                <a class="small-btn" onclick="settingsPage.gotoPreviousPage();">Back</a>
+            </div>
+            <div class="col-md-6 col-sm-6 col-lg-6 col-xl-6 col-6 text-right">
+                <a class="small-btn" onclick="deleteData();">Delete Data</a>
+            </div>
         </div>
-        <div class="col-md-7"></div>
-        <div class="col-md-2"><a class="plate-button chose-button" onclick="deleteData();">Delete Data</a></div>
-    </div>
-    <div class="center-align blur movable-onload">
-        <div class="passwords-wrapper padding-left">
-            @{
-                for (int i = 0; i < Model.PasswordsCount; i++)
+        <div class="blur movable-onload">
+            <div class="row center-content passwords-box">
+                @for (int i = 0; i < Model.PasswordsCount; i++)
                 {
-                    <div class="row movable-onload">
-                        <div class="col-md-12">
-                            <input autocomplete="off" class="text password-input" id="Passwords_@(i)_" name="Passwords[@(i)]" placeholder="Password #@(i+1)" type="text" value="" oninput="settingsPage.passwordChecker(@i);">
-                        </div>
+                    <div class="col-md-12 col-sm-12 col-lg-12 col-xl-12 col-12 movable-onload">
+                        <input autocomplete="off" class="text password-input" id="Passwords_@(i)_" name="Passwords[@(i)]" placeholder="Password #@(i+1)" type="text" value="" oninput="settingsPage.passwordChecker(@i);">
                     </div>
                 }
-                <div class="row movable-onload">
-                    <div class="col-md-12">
-                        <input class="plate-button setting-button disabled" disabled="disabled" type="submit" value="Next" id="submitPasswords" onclick="settingsPage.submitEncryptionPasswords();" onsubmit="settingsPage.submitEncryptionPasswords();" />
-                        <a href="#openModal" class="plate-button setting-button" onclick="settingsPage.showModalElements();">Generate Password</a>
-                    </div>           
+            </div>
+            <div class="row movable-onload passwords-box text-left align-items-end top-margin">
+                <div class="col-12 col-md-12 col-sm-12 col-lg-12 col-xl-12">
+                    <input class="small-btn disabled" disabled="disabled" type="submit" value="Next" id="submitPasswords" onclick="settingsPage.submitEncryptionPasswords();" onsubmit="settingsPage.submitEncryptionPasswords();" />
+                    <a href="#openModal" class="small-btn" onclick="settingsPage.showModalElements();">Generate Password</a>
                 </div>
-            }
+            </div>
         </div>
     </div>
 </div>
 <div id="openModal" class="modalWindow">
     <div>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12 col-md-12 col-sm-12 col-lg-12 col-xl-12">
                 <h2 class="two-header">Password Generator</h2>
             </div>
         </div>
         <div class="row top-margin">
-            <div class="col-md-12 top-margin">
+            <div class="col-12 col-md-12 col-sm-12 col-lg-12 col-xl-12 top-margin">
                 <label class="regulag-text" id="resultPassword">Char count:</label>
                 <input type="number" id="numberBox" min="4" step="1" value="10" onchange="settingsPage.charCountCorrection()" />
             </div>
         </div>
-        <div class="row top-margin">
-            <div class="col-md-5"></div>
-            <div class="com-md-2">
+        <div class="row top-margin text-center">
+            <div class="col-12 col-md-12 col-sm-12 col-lg-12 col-xl-12">
                 <input type="submit" value="Generate" class="plate-button" id="generateButton" onclick="settingsPage.generatePassword()"/>
             </div>
-            <div class="col-md-5"></div>
         </div>
-        <div class="row cancel-button-row">
-            <div class="col-md-10"></div>
-            <div class="col-md-2">
+        <div class="row cancel-button-row text-right">
+            <div class="col-12 col-md-12 col-sm-12 col-lg-12 col-xl-12">
                 <a href="#ok" class="plate-button">Close</a>
             </div>
         </div>

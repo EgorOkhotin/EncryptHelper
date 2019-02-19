@@ -31,13 +31,14 @@ namespace EncryptHelper.Controllers
         public HomeController()
         {
         }
-
+        [ResponseCache(NoStore =true, Location =ResponseCacheLocation.None)]
         public IActionResult Index()
         {
             return View();
         }
 
         [HttpGet("Home/EncryptHelper")]
+        [ResponseCache(NoStore =true, Location =ResponseCacheLocation.None)]
         public IActionResult Initialization()
         {
             ViewData["Title"] = "EncryptHelper";
