@@ -8,6 +8,7 @@
 *.sln.docstates
 
 *storage/
+EncryptHelper/keys/*
 */wwwroot/css/
 */wwwroot/js/
 */wwwroot/fonts/
@@ -269,3 +270,4 @@ paket-files/
 __pycache__/
 *.pyc
 EncryptHelper/wwwroot/js/site.js
+EncryptHelper/keys/keys.db
